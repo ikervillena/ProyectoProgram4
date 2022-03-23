@@ -10,7 +10,14 @@ void main(void){
     int eleccion;
     printf("Escoge una opcion:\t");
     scanf("%i", &eleccion);
-    if(eleccion == 1){
-        iniciarSesion();
+    switch (eleccion) {
+        case 1:
+            iniciarSesion();
+            break;
+        case 2:
+            crearCuenta();
+            break;
+        default:
+            printf("Eleccion incorrecta.");
     }
 }

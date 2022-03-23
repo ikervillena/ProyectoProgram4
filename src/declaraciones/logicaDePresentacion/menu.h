@@ -6,4 +6,6 @@
 
 void iniciarSesion();
 
+void crearCuenta();
+
 #endif
