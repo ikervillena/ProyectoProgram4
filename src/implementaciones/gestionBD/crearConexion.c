@@ -1,4 +1,4 @@
-#include "sqlite/sqlite3.h"
+#include "../../../librerias/Sqlite/sqlite3.h"
 #include "crearConexion.h"
 #include <stdio.h>
 
