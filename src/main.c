@@ -1,5 +1,6 @@
 #include "declaraciones/logicaDePresentacion/visualizar.h"
 #include "declaraciones/logicaDePresentacion/menu.h"
+#include "declaraciones/gestionBD/getData.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -17,7 +18,7 @@ void main(void){
         case 2:
             crearCuenta();
             break;
-        default:
-            printf("Eleccion incorrecta.");
+        default: ;
+            Usuario ** lista = getListaUsuarios();
     }
 }

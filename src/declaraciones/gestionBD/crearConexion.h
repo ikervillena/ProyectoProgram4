@@ -1,4 +1,4 @@
-#include "../../../librerias/Sqlite/sqlite3.h"
+#include "../../../librerias/sqlite/sqlite3.h"
 #ifndef dbConnection
 #define dbConnection
 

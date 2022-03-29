@@ -1,12 +1,12 @@
-#include "../../../librerias/Sqlite/sqlite3.h"
-#include "crearConexion.h"
+#include "../../../librerias/sqlite/sqlite3.h"
+#include "../../declaraciones/gestionBD/crearConexion.h"
 #include <stdio.h>
 
 sqlite3 *db;
 
 int startConn()
 {
-    int rc = sqlite3_open("./db/base.db", &db);
+    int rc = sqlite3_open("../db.db", &db);
 
     if (rc != SQLITE_OK)
     {
