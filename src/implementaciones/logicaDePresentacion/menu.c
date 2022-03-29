@@ -1,4 +1,5 @@
 #include "../../declaraciones/logicaDePresentacion/menu.h"
+#include "../../declaraciones/gestionBD/getData.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,7 +16,11 @@ void iniciarSesion(){
     scanf("%s",contrasenya);
     system("cls");
     //Ahora se debe comprobar la contrasenya y pasar a la siguiente ventana.
-    printf("%s - %s", usuario, contrasenya);
+    if(comprobarUsuario(usuario, contrasenya) == 1){
+        printf("Contrasenya correcta.\n");
+    } else{
+        printf("La contrasenya no es valida.\n");
+    }
 }
 
 void crearCuenta(){

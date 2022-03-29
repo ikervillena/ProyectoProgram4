@@ -74,3 +74,39 @@ Usuario **getListaUsuarios(){
 
 	return lista;
 }
+
+//El siguiente metodo devuelve un 1 si el usuario esta registrado en la BD, y un 0 en caso contrario.
+
+int comprobarUsuario(char *usuario, char *contrasenya){
+	startConn();
+	char sql[] = "SELECT usuario, contrasenya FROM usuario";
+    sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	int usuarioValido = 0;
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {
+			if(strcmp(usuario, sqlite3_column_text(stmt,0)) == 0 &&
+			strcmp(contrasenya, sqlite3_column_text(stmt,1)) == 0){
+				usuarioValido = 1;
+				break;
+			}
+
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+	return usuarioValido;
+}
