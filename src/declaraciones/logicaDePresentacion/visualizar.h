@@ -10,4 +10,6 @@ void imprimirInicio();
 
 void imprimirMenuSocio();
 
+void imprimirDatosUsuario(Usuario usuario);
+
 #endif

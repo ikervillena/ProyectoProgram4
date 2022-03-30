@@ -63,7 +63,7 @@ Usuario **getListaUsuarios(){
             strcpy((*(lista + i))-> apellido, (const char *) sqlite3_column_text(stmt, 3));
             // Hay que cambiar la fecha de nacimiento.
             Fecha fecNac = {0,1,2};
-            (*(lista + i))-> fecNac;
+            (*(lista + i))-> fecNac = fecNac;
             (*(lista + i))-> telefono = sqlite3_column_int(stmt, 5);
             (*(lista + i))-> puntos = sqlite3_column_int(stmt, 6);
             (*(lista + i))-> esSocio = sqlite3_column_int(stmt, 7);
@@ -75,7 +75,7 @@ Usuario **getListaUsuarios(){
 	return lista;
 }
 
-//El siguiente metodo devuelve un 1 si el usuario esta registrado en la BD, y un 0 en caso contrario.
+//El siguiente metodo devuelve un 1 si el usuario esta registrado en la BD, y un 0 en caso contrario.f
 
 int comprobarUsuario(char *usuario, char *contrasenya){
 	startConn();
@@ -109,4 +109,46 @@ int comprobarUsuario(char *usuario, char *contrasenya){
 		return result;
 	}
 	return usuarioValido;
+}
+
+// El siguiente método devuelve el usuario que corresponde con el nombre de usuario recibido como parámetro.
+Usuario *getUsuario(char* nomUsuario){
+	startConn();
+	char sql[] = "SELECT * FROM usuario WHERE usuario = ?";
+    sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+	if (result == SQLITE_OK) {
+		sqlite3_bind_text(stmt, 1, nomUsuario, strlen(nomUsuario), SQLITE_STATIC);
+	} else{
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+
+	Usuario *usuario = malloc(sizeof(Usuario));
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {
+			usuario-> usuario = (char *) sqlite3_column_text(stmt,0);
+			usuario -> contrasenya = (char *) sqlite3_column_text(stmt,1);
+			usuario -> nombre = (char *) sqlite3_column_text(stmt,2);
+			usuario -> apellido = (char *) sqlite3_column_text(stmt,3);
+			Fecha fecNac = {0,1,2};
+			usuario->fecNac = fecNac;
+            usuario->telefono = sqlite3_column_int(stmt, 5);
+            usuario->puntos = sqlite3_column_int(stmt, 6);
+            usuario->esSocio = sqlite3_column_int(stmt, 7);
+			return usuario;
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+	printf("J. Nombre: %s.\n", usuario->nombre);
+	return usuario;
+	free (usuario);
+	usuario = NULL;
 }

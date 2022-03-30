@@ -17,7 +17,10 @@ void iniciarSesion(){
     system("cls");
     //Ahora se debe comprobar la contrasenya y pasar a la siguiente ventana.
     if(comprobarUsuario(usuario, contrasenya) == 1){
-        printf("Contrasenya correcta.\n");
+        printf("Contrasenya correcta.\nSus datos son los siguientes:\n\n");
+        Usuario *user = getUsuario(usuario);
+        imprimirDatosUsuario(*user);
+        
     } else{
         printf("La contrasenya no es valida.\n");
     }
