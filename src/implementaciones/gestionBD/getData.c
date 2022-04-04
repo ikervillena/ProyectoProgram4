@@ -146,7 +146,12 @@ int comprobarAdministrador(char *usuario, char *contrasenya){
 	return usuarioValido;
 }
 
-// El siguiente método devuelve el usuario que corresponde con el nombre de usuario recibido como parámetro.
+// PENDIENTE:
+
+int fechaCogida(Fecha fecha) {
+	
+}
+
 Usuario *getUsuario(char* nomUsuario){
 	startConn();
 	char sql[] = "SELECT * FROM usuario WHERE usuario = ?";
