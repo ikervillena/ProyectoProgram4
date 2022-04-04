@@ -22,7 +22,11 @@ void iniciarSesion(){
         imprimirDatosUsuario(*user);
         
     } else{
-        printf("La contrasenya no es valida.\n");
+        if(comprobarAdministrador(usuario, contrasenya) == 1){
+            printf("Ha iniciado sesion como administrador. Bienvenido %s.\n", usuario);
+        } else{
+            printf("La contrasenya no es valida.\n");
+        }
     }
 }
 

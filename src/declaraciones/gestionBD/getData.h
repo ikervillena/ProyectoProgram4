@@ -7,5 +7,6 @@ extern int numFilas;
 Usuario **getListaUsuarios();
 int getNumFilas(char *tabla);
 int comprobarUsuario(char *usuario, char *contrasenya);
+int comprobarAdministrador(char *usuario, char *contrasenya);
 Usuario *getUsuario(char* nomUsuario);
 #endif
