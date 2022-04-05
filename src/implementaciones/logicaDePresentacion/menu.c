@@ -1,5 +1,6 @@
 #include "../../declaraciones/logicaDePresentacion/menu.h"
 #include "../../declaraciones/gestionBD/getData.h"
+#include "../../declaraciones/gestionBD/insertData.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -87,6 +88,7 @@ void crearTorneo(){
         Fecha fecha = {anyo, mes, dia};
         if(fechaCogida(fecha) == 0) {
             eleccionCorrecta = 1;
+            insertarTorneo(fecha);
             menuAdmin();
         } else{
             printf("\nYa hay un torneo previsto para esa fecha, escoge otra por favor.\n\nDia:\t");
@@ -118,6 +120,7 @@ void menuAdmin(){
             case 5:
                 system("cls");
                 printf("Fin.\n");
+                break;
             default: ;
                 printf("Eleccion incorrecta.\nVuelve a escoger una opcion:\t");
                 scanf("%i", &eleccion);
