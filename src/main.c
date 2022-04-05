@@ -7,18 +7,5 @@
 //Main de la aplicacion.
 
 void main(void){
-    imprimirInicio();
-    int eleccion;
-    printf("Escoge una opcion:\t");
-    scanf("%i", &eleccion);
-    switch (eleccion) {
-        case 1:
-            iniciarSesion();
-            break;
-        case 2:
-            crearCuenta();
-            break;
-        default: ;
-            Usuario ** lista = getListaUsuarios();
-    }
+    menuPrincipal();
 }

@@ -6,6 +6,24 @@
 
 //Implementaciones de las funciones dirigidas a gestionar el menu de la aplicacion.
 
+void menuPrincipal(){
+    imprimirInicio();
+    int eleccion;
+    printf("Escoge una opcion:\t");
+    scanf("%i", &eleccion);
+    switch (eleccion) {
+        case 1:
+            iniciarSesion();
+            break;
+        case 2:
+            crearCuenta();
+            break;
+        default: ;
+            system("cls");
+            printf("Fin.\n");
+    }
+}
+
 void iniciarSesion(){
     imprimirTitulo();
     printf("INICIO DE SESION:\n\nUsuario:\t");
@@ -23,7 +41,7 @@ void iniciarSesion(){
         
     } else{
         if(comprobarAdministrador(usuario, contrasenya) == 1){
-            printf("Ha iniciado sesion como administrador. Bienvenido %s.\n", usuario);
+            menuAdmin();
         } else{
             printf("La contrasenya no es valida.\n");
         }
@@ -53,4 +71,57 @@ void crearCuenta(){
     system("cls");
     printf("%s", usuario);
     //Sin terminar
+}
+
+void crearTorneo(){
+    imprimirTitulo();
+    int dia, mes, anyo;
+    int eleccionCorrecta = 0;
+    printf("CREAR TORNEO:\n\nEscoge la fecha del torneo.\n\nDia:\t");
+    while (eleccionCorrecta == 0){
+        scanf("%i", &dia);
+        printf("\nMes:\t");
+        scanf("%i", &mes);
+        printf("\nAnyo:\t");
+        scanf("%i", &anyo);
+        Fecha fecha = {anyo, mes, dia};
+        if(fechaCogida(fecha) == 0) {
+            eleccionCorrecta = 1;
+            menuAdmin();
+        } else{
+            printf("\nYa hay un torneo previsto para esa fecha, escoge otra por favor.\n\nDia:\t");
+        }
+    }
+}
+
+void menuAdmin(){
+    imprimirMenuAdmin();
+    int eleccion;
+    int eleccionCorrecta = 0;
+    printf("Escoge una opcion:\t");
+    scanf("%i", &eleccion);
+    while(eleccionCorrecta == 0) {
+        eleccionCorrecta = 1;
+        switch (eleccion) {
+            case 1:
+                crearTorneo();
+                break;
+            case 2:
+                printf("Cerrar periodo de inscripcion de un torneo.");
+                break;
+            case 3:
+                printf("Descargar informes.");
+                break;
+            case 4:
+                menuPrincipal();
+                break;
+            case 5:
+                system("cls");
+                printf("Fin.\n");
+            default: ;
+                printf("Eleccion incorrecta.\nVuelve a escoger una opcion:\t");
+                scanf("%i", &eleccion);
+                eleccionCorrecta = 0;
+        }
+    }
 }
