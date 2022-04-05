@@ -1,5 +1,6 @@
 #include "../logicaDeDatos/estructuras.h"
 #include "crearConexion.h"
+#include "../logicaDeNegocio/fechas.h"
 #ifndef getData
 #define getData
 
@@ -15,7 +16,7 @@ int comprobarUsuario(char *usuario, char *contrasenya);
 //Devuelve un 1 si los datos de acceso son correctos, o un 0 si no lo son.
 int comprobarAdministrador(char *usuario, char *contrasenya);
 
-//Devuelve un 0 si la fecha esta libre, o un 1 si esta cogida.
+//Devuelve un 0 si la fecha para un torneo esta libre, o un 1 si esta cogida.
 int fechaCogida(Fecha fecha);
 
 //Devuelve un puntero al usuario cuyo username es el provisto como parametro.

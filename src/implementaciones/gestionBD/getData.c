@@ -149,7 +149,35 @@ int comprobarAdministrador(char *usuario, char *contrasenya){
 // PENDIENTE:
 
 int fechaCogida(Fecha fecha) {
-	
+	startConn();
+	char sql[] = "SELECT COUNT(*) FROM torneo WHERE fec_torneo = '";
+	strcat(sql, textoFecha(fecha));
+	strcat(sql, "'");
+    sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	int fechaCogida = 0;
+	result = sqlite3_step(stmt);
+
+	if(result == SQLITE_ROW) {
+		if (sqlite3_column_int(stmt, 0) > 0) {
+			fechaCogida = 1;
+		}
+	}
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+	return fechaCogida;
 }
 
 Usuario *getUsuario(char* nomUsuario){
