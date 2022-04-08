@@ -19,4 +19,14 @@ void imprimirMenuAdmin();
 //Imprime los datos del usuario recibido como parametro.
 void imprimirDatosUsuario(Usuario usuario);
 
+//Imprime las pistas disponibles en la fecha y hora indicada.
+void imprimirPistas(int* numeros);
+
+//Imprime el menu de la tienda. 
+void imprimirMenuTienda();
+
+//Imprime los articulos de una lista pasada por parámetro
+void imprimirArticulos(ListaArticulos listaArticulos);
+
+
 #endif

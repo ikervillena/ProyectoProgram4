@@ -1,6 +1,7 @@
 #include "../../declaraciones/logicaDePresentacion/menu.h"
 #include "../../declaraciones/gestionBD/getData.h"
 #include "../../declaraciones/gestionBD/insertData.h"
+#include "../../declaraciones/logicaDePresentacion/visualizar.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,6 +26,26 @@ void menuPrincipal(){
     }
 }
 
+void GestionReservas (){
+    printf("AREA DE RESERVAS DE USUARIO\n");
+    printf("\n");
+    printf("Escriba el tipo de pista que desea:\n ");
+    printf("-indoor\n -outdoor\n");
+
+    char* nompist= (char*)malloc(strlen(stdin)*sizeof(char));
+    scanf(stdin,"%s",nompist);
+    printf("Escriba el dia que desea la pista: dd-ms-anyo  ");
+    char* fecha= (char*)malloc(strlen(stdin)*sizeof(char));
+    scanf(stdin,"%s",fecha);
+    printf("\n ");
+
+    printf("Escriba la hora que desea la pista: hora:minuto  ");
+    char* hora= (char*)malloc(strlen(stdin)*sizeof(char));
+    scanf(stdin,"%s",fecha);
+    printf("\n ");
+    int* numeros=getreservas(nompist,fecha,hora);
+    imprimirPistas(numeros);
+}
 void iniciarSesion(){
     imprimirTitulo();
     printf("INICIO DE SESION:\n\nUsuario:\t");
@@ -148,13 +169,13 @@ void menuSocio(Usuario usuario) {
         switch (eleccion)
         {
         case 1:
-            //Reservar pista
+            GestionReservas ();
             break;
         case 2:
             //Torneos
             break;
         case 3:
-            //Tienda
+            menuTienda(usuario);
             break;
         case 4:
             menuPrincipal();
@@ -171,4 +192,22 @@ void menuSocio(Usuario usuario) {
             break;
         }
     }
+}
+void menuTienda(Usuario u) {
+    imprimirMenuTienda();
+    char* numSeleccionado = (char*)malloc(sizeof(char)*3);
+    int* numInt=(int*)malloc(2*sizeof(int));
+    fgets(numSeleccionado, 3, stdin);
+    sscanf(numSeleccionado,"%d", numInt);
+    if (*numInt=16){
+        menuSocio(u);
+    }else{
+        ffflush(stdout);
+        int b = tamanyoLista(*numInt);
+        ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+        listaArticulos = getArticulo(*numInt, b);
+        imprimirArticulos(*listaArticulos);
+
+    }
+
 }
