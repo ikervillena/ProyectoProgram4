@@ -21,4 +21,8 @@ int fechaCogida(Fecha fecha);
 
 //Devuelve un puntero al usuario cuyo username es el provisto como parametro.
 Usuario *getUsuario(char* nomUsuario);
+
+//Devuelve un 1 si ningun usuario de la pareja esta apuntado al torneo y un 0 en caso contrario.
+int parejaLibre(Fecha fecTorn, Usuario usu1, Usuario usu2);
+
 #endif

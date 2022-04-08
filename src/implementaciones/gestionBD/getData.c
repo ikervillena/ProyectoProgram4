@@ -213,7 +213,12 @@ Usuario *getUsuario(char* nomUsuario){
 			usuario->fecNac = fecNac;
             usuario->telefono = sqlite3_column_int(stmt, 5);
             usuario->puntos = sqlite3_column_int(stmt, 6);
-            usuario->esSocio = sqlite3_column_int(stmt, 7);
+			if(strcmp(sqlite3_column_text(stmt, 7), "SI") == 0){
+				usuario->esSocio = 1;
+			} else{
+				usuario->esSocio = 0;
+			}
+            
 		}
 	} while (result == SQLITE_ROW);
 
@@ -223,4 +228,50 @@ Usuario *getUsuario(char* nomUsuario){
 		printf("%s\n", sqlite3_errmsg(db));
 	}
 	return usuario;
+}
+
+int parejaLibre(Fecha fecTorn, Usuario usu1, Usuario usu2) {
+	startConn();
+	char sql[] = "SELECT fec_torneo, usuario1, usuario2 FROM pareja p, inscripcion i, torneo t "
+	"WHERE p.cod_pareja = i.cod_pareja AND i.cod_torneo = t.cod_torneo";
+    sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	int parejaLibre = 1;
+	do {
+		result = sqlite3_step(stmt);
+
+		if (result == SQLITE_ROW) {
+			char fecha[strlen(sqlite3_column_text(stmt, 0)) + 1];
+			strcpy(fecha, sqlite3_column_text(stmt, 0));
+			fecha[strlen(sqlite3_column_text(stmt, 0))] = '\0';
+			char us1[strlen(sqlite3_column_text(stmt, 1)) + 1];
+			strcpy(us1, sqlite3_column_text(stmt, 1));
+			us1[strlen(sqlite3_column_text(stmt, 2))] = '\0';
+			char us2[strlen(sqlite3_column_text(stmt, 0)) + 1];
+			strcpy(us2, sqlite3_column_text(stmt, 2));
+			us2[strlen(sqlite3_column_text(stmt, 2))] = '\0';
+
+			if(strcmp(textoFecha(fecTorn), fecha) == 0 && 
+			(strcmp(us1, usu1.usuario) == 0 || strcmp(us1, usu2.usuario) == 0 ||
+			strcmp(us2, usu1.usuario) == 0 || strcmp(us2, usu2.usuario) == 0)){
+				parejaLibre = 0;
+				break;
+			}
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+	return parejaLibre;
 }

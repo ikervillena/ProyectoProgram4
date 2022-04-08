@@ -10,7 +10,7 @@ int insertarTorneo(Fecha fecha) {
     startConn();
     sqlite3_stmt *stmt;
     //HAY QUE CAMBIAR COD_TOORNEO.
-	char sql[] = "INSERT INTO torneo (cod_torneo, fec_torneo, cod_par_gan) VALUES (50, ?, NULL)";
+	char sql[] = "INSERT INTO torneo (fec_torneo) VALUES (?)";
     char *fecTorneo = textoFecha(fecha);
 	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	if (result != SQLITE_OK) {

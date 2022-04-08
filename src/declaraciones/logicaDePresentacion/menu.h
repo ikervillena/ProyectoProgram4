@@ -16,6 +16,9 @@ void crearCuenta();
 //Gestiona el menu de un administrador.
 void menuAdmin();
 
+//Gestiona el menu de un socio.
+void menuSocio(Usuario usuario);
+
 //Gestiona la creacion de un torneo nuevo.
 void crearTorneo();
 

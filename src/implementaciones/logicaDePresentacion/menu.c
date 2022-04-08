@@ -38,7 +38,12 @@ void iniciarSesion(){
     if(comprobarUsuario(usuario, contrasenya) == 1){
         printf("Contrasenya correcta.\nSus datos son los siguientes:\n\n");
         Usuario *user = getUsuario(usuario);
-        imprimirDatosUsuario(*user);
+        if(user->esSocio == 1) {
+            menuSocio(*user);
+        } else{
+            imprimirDatosUsuario(*user);
+            //MenuNoSocio(*user);
+        }
         
     } else{
         if(comprobarAdministrador(usuario, contrasenya) == 1){
@@ -102,6 +107,7 @@ void menuAdmin(){
     int eleccionCorrecta = 0;
     printf("Escoge una opcion:\t");
     scanf("%i", &eleccion);
+    fflush(stdin);
     while(eleccionCorrecta == 0) {
         eleccionCorrecta = 1;
         switch (eleccion) {
@@ -124,7 +130,45 @@ void menuAdmin(){
             default: ;
                 printf("Eleccion incorrecta.\nVuelve a escoger una opcion:\t");
                 scanf("%i", &eleccion);
+                fflush(stdin);
                 eleccionCorrecta = 0;
+        }
+    }
+}
+
+void menuSocio(Usuario usuario) {
+    imprimirMenuSocio();
+    int eleccion;
+    int eleccionCorrecta = 0;
+    printf("Escoge una opcion:\t");
+    scanf("%i", &eleccion);
+    fflush(stdin);
+    while(eleccionCorrecta == 0){
+        eleccionCorrecta = 1;
+        switch (eleccion)
+        {
+        case 1:
+            //Reservar pista
+            break;
+        case 2:
+            //Torneos
+            break;
+        case 3:
+            //Tienda
+            break;
+        case 4:
+            menuPrincipal();
+            break;
+        case 5:
+            system("cls");
+            printf("Fin.\n");
+            break;
+        default:
+            printf("Eleccion incorrecta.\nVuelve a escoger una opcion:\t");
+            scanf("%i", &eleccion);
+            fflush(stdin);
+            eleccionCorrecta = 0;
+            break;
         }
     }
 }
