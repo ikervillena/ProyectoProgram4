@@ -30,3 +30,11 @@ void imprimirDatosUsuario(Usuario usuario){
     printf("Usuario:\t%s.\nNombre:\t\t%s.\nApellido:\t%s.\nTelefono:\t%i.\nPuntos:\t\t%i.\nEs socio:\t%i.\n",
     usuario.usuario, usuario.nombre, usuario.apellido, usuario.telefono, usuario.puntos, usuario.esSocio);
 }
+
+void imprimirArticulos(ListaArticulos listaArticulos){
+    for (int i = 0; i<listaArticulos.tamanyo;i++){
+        printf("Articulo %i: \n", i);
+        printf("%s : %s \n", listaArticulos.articulos[i].nombre, listaArticulos.articulos[i].descripcion);
+        printf("Su precio es de %s € \n", listaArticulos.articulos[i].precio);
+    }
+}

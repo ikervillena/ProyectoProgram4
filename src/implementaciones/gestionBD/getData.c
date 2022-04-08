@@ -275,3 +275,111 @@ int parejaLibre(Fecha fecTorn, Usuario usu1, Usuario usu2) {
 	}
 	return parejaLibre;
 }
+
+int* getreservas(char* pista,char* fecha,char*hora){  
+	startConn();
+	char sql[] = "SELECT NUM_PISTA FROM	(SELECT B.NUM_PISTA, FECHA, HORA FROM reserva B JOIN (SELECT NUM_PISTA FROM pista WHERE TIPO_PISTA = ? ) A ON B.NUM_PISTA = A.NUM_PISTA) WHERE FECHA != ? AND HORA != ? ";
+	
+    sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+	if (result == SQLITE_OK) {
+		sqlite3_bind_text(stmt, 1, pista, strlen(pista), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 1, fecha, strlen(fecha), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 1, hora, strlen(hora), SQLITE_STATIC);
+
+	} else{
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+	int *pistasDisponibles = (int*)malloc(6*sizeof(int));
+	int i = 0;
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {	
+			pistasDisponibles[i] = sqlite3_column_int(result, 0);
+			i++;
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+	return pistasDisponibles;         
+}
+
+int tamanyoLista(int COD_TIPO_ART){
+	int tamanyo=0;
+	startConn();
+	char sql[] = "SELECT COUNT(*) FROM articulo WHERE COD_TIPO_ART = ?";
+    sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+	if (result == SQLITE_OK) {
+		sqlite3_bind_int(stmt, 1, &COD_TIPO_ART);
+	} else{
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {	
+			tamanyo = sqlite3_column_int(result, 0);
+		}
+	}while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+	return tamanyo;
+}
+
+
+ListaArticulos *getArticulo(int COD_TIPO_ART, int tamanyo){
+	startConn();
+	char sql[] = "SELECT * FROM articulo WHERE COD_TIPO_ART = ?";
+    sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+	if (result == SQLITE_OK) {
+		sqlite3_bind_int(stmt, 1, &COD_TIPO_ART);
+	} else{
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+	ListaArticulos *listaArticulos=(ListaArticulos*)malloc(tamanyo*sizeof(ListaArticulos));
+
+	Articulo *articulo = (Articulo*)malloc(sizeof(Articulo));
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {			
+			
+			listaArticulos->articulos->codigo=sqlite3_column_int(stmt, 0);
+			listaArticulos->articulos->tipo=(char *) malloc((strlen(sqlite3_column_text(stmt,1)) + 1)*sizeof(char));
+			listaArticulos->articulos->tipo=strcpy(articulo->tipo,sqlite3_column_text(stmt,1));
+			listaArticulos->articulos->tipo[strlen(sqlite3_column_text(stmt,1))]='\0';
+			listaArticulos->articulos->marca=(char *) malloc((strlen(sqlite3_column_text(stmt,2)) + 1)*sizeof(char));
+			listaArticulos->articulos->marca=strcpy(articulo->marca,sqlite3_column_text(stmt,2));
+			listaArticulos->articulos->marca[strlen(sqlite3_column_text(stmt,2))]='\0';
+			listaArticulos->articulos->nombre=(char *) malloc((strlen(sqlite3_column_text(stmt,3)) + 1)*sizeof(char));
+			listaArticulos->articulos->nombre=strcpy(articulo->nombre,sqlite3_column_text(stmt,3));
+			listaArticulos->articulos->nombre[strlen(sqlite3_column_text(stmt,3))]='\0';
+			listaArticulos->articulos->descripcion=(char *) malloc((strlen(sqlite3_column_text(stmt,4)) + 1)*sizeof(char));
+			listaArticulos->articulos->descripcion=strcpy(articulo->nombre,sqlite3_column_text(stmt,4));
+			listaArticulos->articulos->descripcion[strlen(sqlite3_column_text(stmt,4))]='\0';
+			listaArticulos->articulos->precio=(char *) malloc((strlen(sqlite3_column_text(stmt,5)) + 1)*sizeof(char));
+			listaArticulos->articulos->precio=strcpy(articulo->precio,sqlite3_column_text(stmt,5));
+			listaArticulos->articulos->precio[strlen(sqlite3_column_text(stmt,5))]='\0';
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+	return listaArticulos;
+}

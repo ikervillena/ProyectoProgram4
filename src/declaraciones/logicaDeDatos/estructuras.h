@@ -51,6 +51,7 @@ typedef struct {
 //Declaracion de la estructura de una reserva.
 
 typedef struct {
+    Pista pista;
     Fecha fecha;
     char *hora;
     //Atributo duracion: el valor 0 indica 1h y el valor 1 indica 1h30.
@@ -80,5 +81,10 @@ typedef struct {
     Fecha fecha;
     Pareja parejaGanadora;
 } Torneo;
+
+typedef struct{
+	int tamanyo;
+	Articulo *articulos;
+}ListaArticulos;
 
 #endif

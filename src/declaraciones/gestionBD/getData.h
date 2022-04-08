@@ -25,4 +25,17 @@ Usuario *getUsuario(char* nomUsuario);
 //Devuelve un 1 si ningun usuario de la pareja esta apuntado al torneo y un 0 en caso contrario.
 int parejaLibre(Fecha fecTorn, Usuario usu1, Usuario usu2);
 
+//Devuelve las reservas que se han realizado hasta el momento
+int*  getreservas(char* pista,char* fecha,char*hora);
+
+//Devuelve el tamanyo del array de articulos
+
+int tamanyoLista(int COD_TIPO_ART);
+
+//Devueve un array de articulos
+
+ListaArticulos *getArticulo(int COD_TIPO_ART, int tamanyo);
+
+
+
 #endif
