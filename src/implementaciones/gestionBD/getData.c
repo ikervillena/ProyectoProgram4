@@ -18,11 +18,11 @@ int getNumFilas(char sql[]){
 		return result;
 	}
 
-	int numFilas = 1;
+	int numFilas = 0;
 	do {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {
-			numFilas = sqlite3_column_int(stmt, 0);
+			numFilas++;
 		}
 	} while (result == SQLITE_ROW);
 
@@ -383,3 +383,6 @@ ListaArticulos *getArticulo(int COD_TIPO_ART, int tamanyo){
 	}
 	return listaArticulos;
 }
+
+
+

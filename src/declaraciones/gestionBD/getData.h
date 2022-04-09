@@ -37,5 +37,4 @@ int tamanyoLista(int COD_TIPO_ART);
 ListaArticulos *getArticulo(int COD_TIPO_ART, int tamanyo);
 
 
-
 #endif

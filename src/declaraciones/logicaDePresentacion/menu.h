@@ -22,4 +22,12 @@ void menuSocio(Usuario usuario);
 //Gestiona la creacion de un torneo nuevo.
 void crearTorneo();
 
+//Gestiona la reservas de pista de la aplicacion.
+void GestionReservas ();
+
+//Gestiona la primera venta del menu de la tienda. 
+void menuTienda(Usuario usuario);
+
+//Gestiona la segunda ventana del menu de la tienda.
+void menuTienda2(Usuario u, ListaArticulos l);
 #endif

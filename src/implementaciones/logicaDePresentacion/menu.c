@@ -26,26 +26,6 @@ void menuPrincipal(){
     }
 }
 
-void GestionReservas (){
-    printf("AREA DE RESERVAS DE USUARIO\n");
-    printf("\n");
-    printf("Escriba el tipo de pista que desea:\n ");
-    printf("-indoor\n -outdoor\n");
-
-    char* nompist= (char*)malloc(strlen(stdin)*sizeof(char));
-    scanf(stdin,"%s",nompist);
-    printf("Escriba el dia que desea la pista: dd-ms-anyo  ");
-    char* fecha= (char*)malloc(strlen(stdin)*sizeof(char));
-    scanf(stdin,"%s",fecha);
-    printf("\n ");
-
-    printf("Escriba la hora que desea la pista: hora:minuto  ");
-    char* hora= (char*)malloc(strlen(stdin)*sizeof(char));
-    scanf(stdin,"%s",fecha);
-    printf("\n ");
-    int* numeros=getreservas(nompist,fecha,hora);
-    imprimirPistas(numeros);
-}
 void iniciarSesion(){
     imprimirTitulo();
     printf("INICIO DE SESION:\n\nUsuario:\t");
@@ -97,7 +77,7 @@ void crearCuenta(){
     scanf("%s", apellido);
     system("cls");
     printf("%s", usuario);
-    //Sin terminar
+    //Sin terminar 
 }
 
 void crearTorneo(){
@@ -193,21 +173,182 @@ void menuSocio(Usuario usuario) {
         }
     }
 }
-void menuTienda(Usuario u) {
+
+void menuTienda(Usuario u){
     imprimirMenuTienda();
-    char* numSeleccionado = (char*)malloc(sizeof(char)*3);
-    int* numInt=(int*)malloc(2*sizeof(int));
-    fgets(numSeleccionado, 3, stdin);
-    sscanf(numSeleccionado,"%d", numInt);
-    if (*numInt=16){
-        menuSocio(u);
-    }else{
-        ffflush(stdout);
-        int b = tamanyoLista(*numInt);
-        ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
-        listaArticulos = getArticulo(*numInt, b);
-        imprimirArticulos(*listaArticulos);
+    int eleccion;
+    int eleccionCorrecta = 0;
+    printf("Escoge el tipo de articulo que desees comprar:\t");
+    scanf("%i", &eleccion);
+    fflush(stdin);
+    while(eleccionCorrecta == 0) {
+        eleccionCorrecta = 1;
+        switch (eleccion) {
+            case 1:
+                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b = tamanyoLista(eleccion);
+                listaArticulos = getArticulo(eleccion, b);
+                break;
+            case 2:
+                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b = tamanyoLista(eleccion);
+                listaArticulos = getArticulo(eleccion, b);
+                break;
+            case 3:
+                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b = tamanyoLista(eleccion);
+                listaArticulos = getArticulo(eleccion, b);
+                break;
+            case 4:
+                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b = tamanyoLista(eleccion);
+                listaArticulos = getArticulo(eleccion, b);
+                break;
+            case 5:
+                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b = tamanyoLista(eleccion);
+                listaArticulos = getArticulo(eleccion, b);
+                break;
+            case 6:
+                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b = tamanyoLista(eleccion);
+                listaArticulos = getArticulo(eleccion, b);
+                break;
+            case 7:
+                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b = tamanyoLista(eleccion);
+                listaArticulos = getArticulo(eleccion, b);
+                break;
+            case 8:
+                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b = tamanyoLista(eleccion);
+                listaArticulos = getArticulo(eleccion, b);
+                break;
+            case 9:
+                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b = tamanyoLista(eleccion);
+                listaArticulos = getArticulo(eleccion, b);
+                break;
+            case 10:
+                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b = tamanyoLista(eleccion);
+                listaArticulos = getArticulo(eleccion, b);
+                break;
+            case 11:
+                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b = tamanyoLista(eleccion);
+                listaArticulos = getArticulo(eleccion, b);
+                break;
+            case 12:
+                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b = tamanyoLista(eleccion);
+                listaArticulos = getArticulo(eleccion, b);
+                break;
+            case 13:
+                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b = tamanyoLista(eleccion);
+                listaArticulos = getArticulo(eleccion, b);
+                break;
+            case 14:
+                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b = tamanyoLista(eleccion);
+                listaArticulos = getArticulo(eleccion, b);
+                break;
+            case 15:
+                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b = tamanyoLista(eleccion);
+                listaArticulos = getArticulo(eleccion, b);
+                break;
+            case 16:
+                menuSocio(u);
+                break;
+            default: ;
+                printf("Eleccion incorrecta.\nVuelve a escoger una opcion:\t");
+                scanf("%i", &eleccion);
+                fflush(stdin);
+                eleccionCorrecta = 0;
+        }
+    }
+}
+
+void menuTienda2(Usuario u, ListaArticulos l){ 
+    imprimirArticulos(l);
+    int eleccion;
+    int cantidad;
+    int eleccionCorrecta = 0;
+    printf("Escoge el codigo del articulo que desees comprar:\t");
+    scanf("%i", &eleccion);
+    fflush(stdin);
+    int existeCodigoArticulo = 0;
+    int indiceArticulo=0;
+    for (int i = 0; i < l.tamanyo; i++)
+    {
+        if (l.articulos[i].codigo==eleccion)
+        {
+            existeCodigoArticulo=1;
+            indiceArticulo=i;
+        }
+    }
+    if (existeCodigoArticulo==1)
+    {
+        printf("Seleccione la cantidad que desea comprar: \t");
+        scanf("%i", &cantidad);
+        fflush(stdin);
+        char sql[] = "SELECT * FROM compra"; 
+        int codigoCompra = getNumFilas(sql)+1;
+        char* fecha = fechaActual();
+        int b = insertCompra(codigoCompra, u, l.articulos[indiceArticulo], cantidad, fecha);
+
+        printf("La compra ha sido procesada con éxito. Muchas gracias. \n");
 
     }
-
 }
+
+
+
+
+void GestionReservas (){
+    printf("AREA DE RESERVAS DE USUARIO\n");
+    printf("\n");
+    printf("Escriba el tipo de pista que desea:\n ");
+    printf("-indoor\n -outdoor\n");
+
+    char* nompist= (char*)malloc(strlen(stdin)*sizeof(char));
+    scanf(stdin,"%s",nompist);
+    printf("Escriba el dia que desea la pista: dd-ms-anyo  ");
+    char* fecha= (char*)malloc(strlen(stdin)*sizeof(char));
+    scanf(stdin,"%s",fecha);
+    printf("\n ");
+
+    ffflush(stdin);
+    printf("Escriba la hora que desea la pista (Recuerda que solo se pueden servar las pista a empunto): hora:minuto  ");
+    char* hora= (char*)malloc(6*sizeof(char));   
+    scanf(stdin,"%s",hora);
+    printf("\n ");
+    char num1='0';
+        while(hora[3]== num1 && hora[4]== num1){
+        fflush(stdout);
+        printf("Escriba la hora que desea la pista (Recuerda que solo se pueden servar las pista a empunto): hora:minuto  ");
+        char* hora= (char*)malloc(strlen(stdin)*sizeof(char));
+        scanf(stdin,"%s",hora);
+        printf("\n ");
+    }
+    printf("\n ");
+    int* numeros=getreservas(nompist,fecha,hora);
+    imprimirPistas(numeros);
+    int si=0;
+    while (si=0){
+       printf("Escriba el numero de pista que dese reservar: \n");
+        int pistanum;
+        scanf(stdin,"%s",&pistanum);
+          
+    }
+    if(int a=0; a<sizeof if(int a=0; a<sizeof(numerosnumeros
+        if (n{
+            si=1;
+            [a]=    stanum){
+            si=1;
+        }
+        }
+    (numeros);a++){
+        

@@ -54,8 +54,6 @@ typedef struct {
     Pista pista;
     Fecha fecha;
     char *hora;
-    //Atributo duracion: el valor 0 indica 1h y el valor 1 indica 1h30.
-    int duracion;
     int precio;
 } Reserva;
 

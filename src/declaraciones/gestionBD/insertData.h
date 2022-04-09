@@ -5,4 +5,6 @@
 //Inserta un torneo en la base de datos.
 int insertarTorneo(Fecha fecha);
 
+//Inserta una compra en la base de datos. 
+int insertCompra(int codCompra, Usuario u, Articulo a, int cantidad, char* f);
 #endif

@@ -47,16 +47,15 @@ void imprimirPistas(int* numeros) {
      printf("Las pistas disponibles son las siguientes:\n");
      printf("\n");
      for (int i=0;i<sizeof(numeros);i++){
-         int tamanyo=strlen(numeros[i]);
-         printf("%d",numeros[i]);
+         printf("- %d \n",numeros[i]);
      }
 }  
 
 void imprimirArticulos(ListaArticulos listaArticulos){
     for (int i = 0; i<listaArticulos.tamanyo;i++){
-    printf("Articulo  i: \n", i);
+    printf("Código de articulo: %i", listaArticulos.articulos[i].codigo);
     printf("%s : %s \n", listaArticulos.articulos[i].nombre, listaArticulos.articulos[i].descripcion);    
-    printf("Su precio es de %s € \n", listaArticulos.articulos[i].precio);
+    printf("Su precio es de %s € \n\n", listaArticulos.articulos[i].precio);
     }
 }
 

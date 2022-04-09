@@ -41,3 +41,28 @@ int insertarTorneo(Fecha fecha) {
 
 	return SQLITE_OK;
 }
+
+int insertCompra(int codCompra, Usuario u, Articulo a, int cantidad, char * f){
+	int precioArticulo = atoi(a.precio);
+	int rc;
+	char *err_msg=0;
+	sqlite3_stmt *res;
+	char *sql ="INSERT INTO compra (COD_COMP, USUARIO, COD_ART, CANTIDAD, FECHA, PRECIO) VALUES (?,?,?,?,?,?);";
+	rc=sqlite3_prepare_v2(db,sql,-1,&res,0);
+	if (rc==SQLITE_OK){
+		sqlite3_bind_int(res,1,codCompra);
+		sqlite3_bind_int(res,4,cantidad);
+		sqlite3_bind_int(res,3,a.codigo);
+		sqlite3_bind_text(res,2,u.usuario,-1,SQLITE_STATIC);
+		sqlite3_bind_int(res,6,precioArticulo*cantidad);
+		sqlite3_bind_text(res,5,f,-1,SQLITE_STATIC);
+	}else{
+		fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(db));
+	}
+	int step=sqlite3_step(res);
+	printf("%i",step);
+	sqlite3_finalize(res);
+
+	return step;
+	
+}

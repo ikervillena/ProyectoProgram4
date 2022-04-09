@@ -1,6 +1,7 @@
 #include "../../declaraciones/logicaDeNegocio/fechas.h"
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 int compFecha(Fecha fec1, Fecha fec2) {
     int comp = 0;
@@ -51,3 +52,15 @@ char* textoFecha(Fecha fec){
     texto[10] = '\0';
     return texto;
 }
+
+char* fechaActual(){
+    time_t t;
+    struct tm *tm;
+    char fechayhora[100];
+
+    t=time(NULL);
+    tm=localtime(&t);
+    strftime(fechayhora, 100, "%d/%m/%Y", tm);
+    
+    return fechayhora;
+}   
