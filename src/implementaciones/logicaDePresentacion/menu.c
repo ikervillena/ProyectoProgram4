@@ -329,7 +329,7 @@ void GestionReservas (Usuario u){
         fflush(stdin);
 
         horareserva(hora);
-        pistasdisponibles=numpist (nompist,fecha,hora);
+        pistasdisponibles=getNumPistas(nompist,fecha,hora);
         if(pistasdisponibles=0){
         printf("En el dia y hora que has seleccionado no hay pistas %s disponibles \n",nompist);
         }

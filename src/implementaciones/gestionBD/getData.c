@@ -384,5 +384,37 @@ ListaArticulos *getArticulo(int COD_TIPO_ART, int tamanyo){
 	return listaArticulos;
 }
 
+int getNumPistas(char* pista, char* fecha, char* hora){
+	startConn();
+	char sql[] = "SELECT NUM_PISTA FROM	(SELECT B.NUM_PISTA, FECHA, HORA FROM reserva B JOIN (SELECT NUM_PISTA FROM pista WHERE TIPO_PISTA = ? ) A ON B.NUM_PISTA = A.NUM_PISTA) WHERE FECHA != ? AND HORA != ? ";
+	sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+	
+	if (result == SQLITE_OK) {
+		sqlite3_bind_text(stmt, 1, pista, strlen(pista), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 1, fecha, strlen(fecha), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 1, hora, strlen(hora), SQLITE_STATIC);
+
+	} else{
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+	int numFilas = 0;
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {
+			numFilas++;
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+	return numFilas;
+}
+
 
 

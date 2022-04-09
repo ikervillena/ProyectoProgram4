@@ -16,9 +16,5 @@ void horareserva (char* hora){
         free(tiempo);
     }
 }
-int numpist (char*nompist,char*fecha, char*hora){
-    char sql[]=("SELECT NUM_PISTA FROM	(SELECT B.NUM_PISTA, FECHA, HORA FROM reserva B JOIN (SELECT NUM_PISTA FROM pista WHERE TIPO_PISTA = %s) A ON B.NUM_PISTA = A.NUM_PISTA) WHERE FECHA != %s AND HORA != %s ",nompist,fecha,hora);
-    int filas=getNumFilas(sql);
-    return filas;
-}
+
 

@@ -36,5 +36,8 @@ int tamanyoLista(int COD_TIPO_ART);
 
 ListaArticulos *getArticulo(int COD_TIPO_ART, int tamanyo);
 
+//Devuelve el numero de pistas de un tipo especifico disponibles en la fecha y hora indicadas por el usuario.
+int getNumPistas(char* pista, char* fecha, char* hora);
+
 
 #endif
