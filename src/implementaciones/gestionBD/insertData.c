@@ -66,3 +66,28 @@ int insertCompra(int codCompra, Usuario u, Articulo a, int cantidad, char * f){
 	return step;
 	
 }
+
+int insertReserva(int codReserva, Usuario u,int numpista, char* fecha, char* hora, int precio){
+	int rc;
+	char *err_msg=0;
+	sqlite3_stmt *res;
+	char *sql ="INSERT INTO reserva (COD_RES, USUARIO, NUM_PISTA,FECHA,HORA INICIO,PRECIO) VALUES (?,?,?,?,?,?);";
+	rc=sqlite3_prepare_v2(db,sql,-1,&res,0);
+	
+	if (rc==SQLITE_OK){
+		sqlite3_bind_int(res,1,codReserva);
+		sqlite3_bind_text(res,2,u.usuario,-1,SQLITE_STATIC);
+		sqlite3_bind_int(res,3,numpista);
+		sqlite3_bind_int(res,4,fecha);
+		sqlite3_bind_text(res,5,hora,-1,SQLITE_STATIC);
+		sqlite3_bind_int(res,6,precio);
+		}else{
+		fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(db));
+	}
+	int step=sqlite3_step(res);
+	printf("%i",step);
+	sqlite3_finalize(res);
+
+	return step;
+	
+}

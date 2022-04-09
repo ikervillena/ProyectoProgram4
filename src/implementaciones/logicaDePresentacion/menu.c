@@ -2,6 +2,7 @@
 #include "../../declaraciones/gestionBD/getData.h"
 #include "../../declaraciones/gestionBD/insertData.h"
 #include "../../declaraciones/logicaDePresentacion/visualizar.h"
+#include "../../declaraciones/logicaDeNegocio/reserva.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -149,7 +150,7 @@ void menuSocio(Usuario usuario) {
         switch (eleccion)
         {
         case 1:
-            GestionReservas ();
+            GestionReservas (usuario);
             break;
         case 2:
             //Torneos
@@ -304,51 +305,57 @@ void menuTienda2(Usuario u, ListaArticulos l){
     }
 }
 
-
-
-
-void GestionReservas (){
+void GestionReservas (Usuario u){
     printf("AREA DE RESERVAS DE USUARIO\n");
     printf("\n");
-    printf("Escriba el tipo de pista que desea:\n ");
-    printf("-indoor\n -outdoor\n");
+    int pistasdisponibles=0;
+    char* nompist;
+    char* fecha;
+    char* hora;
+    while (pistasdisponibles=0){
+        printf("Escriba el tipo de pista que desea:\n ");
+        printf("-indoor\n -outdoor\n");
+        scanf("%s",nompist);
+        fflush(stdin);
 
-    char* nompist= (char*)malloc(strlen(stdin)*sizeof(char));
-    scanf(stdin,"%s",nompist);
-    printf("Escriba el dia que desea la pista: dd-ms-anyo  ");
-    char* fecha= (char*)malloc(strlen(stdin)*sizeof(char));
-    scanf(stdin,"%s",fecha);
-    printf("\n ");
-
-    ffflush(stdin);
-    printf("Escriba la hora que desea la pista (Recuerda que solo se pueden servar las pista a empunto): hora:minuto  ");
-    char* hora= (char*)malloc(6*sizeof(char));   
-    scanf(stdin,"%s",hora);
-    printf("\n ");
-    char num1='0';
-        while(hora[3]== num1 && hora[4]== num1){
-        fflush(stdout);
-        printf("Escriba la hora que desea la pista (Recuerda que solo se pueden servar las pista a empunto): hora:minuto  ");
-        char* hora= (char*)malloc(strlen(stdin)*sizeof(char));
-        scanf(stdin,"%s",hora);
+        printf("Escriba el dia que desea la pista: dd-ms-anyo \n ");
+        scanf("%s",fecha);
         printf("\n ");
+
+        fflush(stdin);
+        printf("Escriba la hora que desea la pista (Recuerda que solo se pueden servar las pista a empunto): hora:minuto  "); 
+        scanf("%s",hora);
+        printf("\n ");
+        fflush(stdin);
+
+        horareserva(hora);
+        pistasdisponibles=numpist (nompist,fecha,hora);
+        if(pistasdisponibles=0){
+        printf("En el dia y hora que has seleccionado no hay pistas %s disponibles \n",nompist);
+        }
     }
     printf("\n ");
     int* numeros=getreservas(nompist,fecha,hora);
     imprimirPistas(numeros);
     int si=0;
+    int pistanum;
     while (si=0){
        printf("Escriba el numero de pista que dese reservar: \n");
-        int pistanum;
-        scanf(stdin,"%s",&pistanum);
-          
+        scanff(stdin,"%s",&pistanum);
+        for(int a=0; a<sizeof(numeros);a++){
+            if (numeros[a]==pistanum){
+                si=si+1;
+            }
+            else{
+               printf("El numero de pista que ha elegido no esta disponible \n"); 
+            }
+        }
     }
-    if(int a=0; a<sizeof if(int a=0; a<sizeof(numerosnumeros
-        if (n{
-            si=1;
-            [a]=    stanum){
-            si=1;
-        }
-        }
-    (numeros);a++){
+    char sql[]=("SELECT * FROM reserva");
+    int filas=getNumFilas(sql);
+    int b = insertReserva(filas+1,u,pistanum,fecha,hora,8);
+
+    printf("La reserva ha sido procesada con éxito. Muchas gracias. \n");
+    
+}
         

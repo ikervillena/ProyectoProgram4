@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "getdata.h": "c",
-        "visualizar.h": "c"
+        "visualizar.h": "c",
+        "reserva.h": "c",
+        "cstdlib": "c"
     }
 }
