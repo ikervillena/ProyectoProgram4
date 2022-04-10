@@ -3,6 +3,8 @@
 #include "../../declaraciones/gestionBD/insertData.h"
 #include "../../declaraciones/logicaDePresentacion/visualizar.h"
 #include "../../declaraciones/logicaDeNegocio/reserva.h"
+#include "../../declaraciones/gestionBD/updateData.h"
+#include "../../declaraciones/logicaDeNegocio/torneos.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -87,10 +89,13 @@ void crearTorneo(){
     printf("CREAR TORNEO:\n\nEscoge la fecha del torneo.\n\nDia:\t");
     while (eleccionCorrecta == 0){
         scanf("%i", &dia);
+        fflush(stdin);
         printf("\nMes:\t");
         scanf("%i", &mes);
+        fflush(stdin);
         printf("\nAnyo:\t");
         scanf("%i", &anyo);
+        fflush(stdin);
         Fecha fecha = {anyo, mes, dia};
         if(fechaCogida(fecha) == 0) {
             eleccionCorrecta = 1;
@@ -116,7 +121,7 @@ void menuAdmin(){
                 crearTorneo();
                 break;
             case 2:
-                printf("Cerrar periodo de inscripcion de un torneo.");
+                cerrarInscripciones();
                 break;
             case 3:
                 printf("Descargar informes.");
@@ -152,7 +157,7 @@ void menuSocio(Usuario usuario) {
             GestionReservas (usuario);
             break;
         case 2:
-            //Torneos
+            menuTorneos(usuario);
             break;
         case 3:
             menuTienda(usuario);
@@ -163,6 +168,36 @@ void menuSocio(Usuario usuario) {
         case 5:
             system("cls");
             printf("Fin.\n");
+            break;
+        default:
+            printf("Eleccion incorrecta.\nVuelve a escoger una opcion:\t");
+            scanf("%i", &eleccion);
+            fflush(stdin);
+            eleccionCorrecta = 0;
+            break;
+        }
+    }
+}
+
+void menuTorneos(Usuario usuario){
+    imprimirMenuTorneos();
+    int eleccion;
+    int eleccionCorrecta = 0;
+    printf("Escoge una opcion:\t");
+    scanf("%i", &eleccion);
+    fflush(stdin);
+    while(eleccionCorrecta == 0){
+        eleccionCorrecta = 1;
+        switch (eleccion)
+        {
+        case 1:
+            inscripcionTorneo(usuario);
+            break;
+        case 2:
+            //Proximos torneos.
+            break;
+        case 3:
+            menuSocio(usuario);
             break;
         default:
             printf("Eleccion incorrecta.\nVuelve a escoger una opcion:\t");
@@ -359,3 +394,85 @@ void GestionReservas (Usuario u){
     
 }
         
+void inscripcionTorneo(Usuario usuario) {
+    imprimirInscripcionTorneo();
+    imprimirProximosTorneos();
+    int eleccion;
+    int eleccionCorrecta = 0;
+    do
+    {
+        printf("Escoge un codigo de torneo (0 para volver):\t");
+        scanf("%i", &eleccion);
+        fflush(stdin);
+        if(eleccion == 0) {
+            menuTorneos(usuario);
+            eleccionCorrecta = 1;
+        } else{
+            if (inscripcionesAbiertas(eleccion) == 1){
+                eleccionCorrecta = 1;
+            } else {
+                printf("Eleccion incorrecta.\n\n");
+            }
+        }
+    } while (eleccionCorrecta == 0);
+
+    char nomUsuario[25];
+    eleccionCorrecta = 0;
+    Usuario *companyero;
+    do
+    {
+        printf("\nNombre de usuario de tu pareja ('volver' para volver):\t");
+        scanf("%s", nomUsuario);
+        fflush(stdin);
+        companyero = getUsuario(nomUsuario);
+        printf("%s\n", companyero->nombre);
+        if(strcmp(nomUsuario, "volver") == 0) {
+            menuTorneos(usuario);
+            eleccionCorrecta = 1;
+        } else{
+            if(companyero->esSocio == 1){
+                eleccionCorrecta = 1;
+                printf("Es socio.\n");
+            } else {
+                printf("El nombre de usuario no corresponde a ningun socio.\n");
+            }
+        }
+    } while (eleccionCorrecta == 0);
+    
+    //Guardar la pareja en la BD en caso de que no este registrada.
+    if(getCodigoPareja(usuario, *companyero) == 0) insertarPareja(usuario, *companyero);
+
+    //Inscribir a la pareja en el torneo.
+    Pareja pareja = {getCodigoPareja(usuario, *companyero), usuario, *companyero};
+    insertarInscripcion(eleccion, pareja);
+
+    free(companyero);
+    //menuTorneos(usuario);
+}
+
+void cerrarInscripciones() {
+    imprimirCierreInscripciones();
+    imprimirProximosTorneos();
+    int eleccion;
+    int eleccionCorrecta = 0;
+    do
+    {
+        printf("Escoge un codigo de torneo (0 para volver):\t");
+        scanf("%i", &eleccion);
+        fflush(stdin);
+        if(eleccion == 0) {
+            menuAdmin();
+            eleccionCorrecta = 1;
+        } else{
+            if (inscripcionesAbiertas(eleccion) == 1){
+                eleccionCorrecta = 1;
+            } else {
+                printf("Eleccion incorrecta.\n\n");
+            }
+        }
+    } while (eleccionCorrecta == 0);
+
+    printf("eleccion %i\n", eleccion);
+    cierreInscripciones(eleccion);
+    menuAdmin();
+}

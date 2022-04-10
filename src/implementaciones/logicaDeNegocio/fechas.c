@@ -62,3 +62,11 @@ char* fechaActual(char* fechayhora){
     
     return fechayhora;
 }   
+
+Fecha getFecha(char *textoFecha) {
+    int dia = (textoFecha[0] - '0') * 10 + (textoFecha[1] - '0');
+	int mes = (textoFecha[3] - '0') * 10 + (textoFecha[4] - '0');
+	int anyo = (textoFecha[6] - '0') * 1000 + (textoFecha[7] - '0') * 100
+	+ (textoFecha[8] - '0') * 10 + (textoFecha[9] - '0');
+	return (Fecha) {anyo, mes, dia};
+}

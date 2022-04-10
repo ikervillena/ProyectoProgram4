@@ -39,5 +39,13 @@ ListaArticulos *getArticulo(int COD_TIPO_ART, int tamanyo);
 //Devuelve el numero de pistas de un tipo especifico disponibles en la fecha y hora indicadas por el usuario.
 int getNumPistas(char* pista, char* fecha, char* hora);
 
+//Imprime los torneos cuyo periodo de inscripcion esta abierto.
+int imprimirProximosTorneos();
+
+//Devuelve un 1 si las inscripciones del torneo estan abiertas y un 0 si estan cerradas.
+int inscripcionesAbiertas(int codTorneo);
+
+//Devuelve el codigo de pareja de los usuario provistos si la pareja esta registrada, y un 0 si no lo esta.
+int getCodigoPareja(Usuario usuario1, Usuario usuario2);
 
 #endif

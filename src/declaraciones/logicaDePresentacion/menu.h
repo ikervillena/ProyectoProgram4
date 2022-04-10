@@ -19,6 +19,9 @@ void menuAdmin();
 //Gestiona el menu de un socio.
 void menuSocio(Usuario usuario);
 
+//Gestiona el menu de torneos.
+void menuTorneos(Usuario usuario);
+
 //Gestiona la creacion de un torneo nuevo.
 void crearTorneo();
 
@@ -30,4 +33,11 @@ void menuTienda(Usuario usuario);
 
 //Gestiona la segunda ventana del menu de la tienda.
 void menuTienda2(Usuario u, ListaArticulos l);
+
+//Gestiona la inscripcion a nuevos torneos.
+void inscripcionTorneo(Usuario usuario);
+
+//Gestiona el cierre del periodo de inscripciones de un torneo.
+void cerrarInscripciones();
+
 #endif

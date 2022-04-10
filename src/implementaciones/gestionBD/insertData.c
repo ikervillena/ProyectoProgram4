@@ -6,11 +6,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//SIN TERMINAR
 int insertarTorneo(Fecha fecha) {
     startConn();
     sqlite3_stmt *stmt;
-    //HAY QUE CAMBIAR COD_TOORNEO.
 	char sql[] = "INSERT INTO torneo (fec_torneo) VALUES (?)";
     char *fecTorneo = textoFecha(fecha);
 	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
@@ -91,4 +89,75 @@ int insertReserva(int codReserva, Usuario u,int numpista, char* fecha, char* hor
 
 	return step;
 	
+}
+
+int insertarInscripcion(int codTorneo, Pareja pareja){
+	startConn();
+    sqlite3_stmt *stmt;
+	char sql[] = "INSERT INTO inscripcion (cod_torneo, cod_pareja) VALUES (?, ?)";
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (INSERT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+	result = sqlite3_bind_int(stmt, 1, codTorneo);
+	result = sqlite3_bind_int(stmt, 2, pareja.codigo);
+
+	if (result != SQLITE_OK) {
+		printf("Error binding parameters\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	result = sqlite3_step(stmt);
+	if (result != SQLITE_DONE) {
+		printf("Error inserting new data\n");
+		return result;
+	}
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (INSERT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	return SQLITE_OK;
+}
+
+int insertarPareja(Usuario jugador1, Usuario jugador2) {
+	startConn();
+    sqlite3_stmt *stmt;
+	char sql[] = "INSERT INTO pareja (usuario1, usuario2) VALUES (?, ?)";
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (INSERT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	result = sqlite3_bind_text(stmt, 1, jugador1.usuario, strlen(jugador1.usuario), SQLITE_STATIC);
+	result = sqlite3_bind_text(stmt, 2, jugador2.usuario, strlen(jugador2.usuario), SQLITE_STATIC);
+
+	if (result != SQLITE_OK) {
+		printf("Error binding parameters\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	result = sqlite3_step(stmt);
+	if (result != SQLITE_DONE) {
+		printf("Error inserting new data\n");
+		return result;
+	}
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (INSERT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	return SQLITE_OK;
 }

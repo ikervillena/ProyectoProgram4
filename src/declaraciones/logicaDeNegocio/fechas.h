@@ -11,4 +11,8 @@ int compFecha(Fecha fec1, Fecha fec2);
 char* textoFecha(Fecha fecha);
 
 char* fechaActual();
+
+//Devuelve una fecha, partiendo de un char* con el formato 'dd-mm-aaaa'.
+Fecha getFecha(char *textoFecha);
+
 #endif

@@ -3,6 +3,7 @@
 #include <string.h>
 #include "../../declaraciones/gestionBD/getData.h"
 #include "../../declaraciones/logicaDePresentacion/visualizar.h"
+#include "../../declaraciones/gestionBD/insertData.h"
 
 /*El siguiente metodo devuelve el numero de filas que tiene por resultado una consulta sql
 recibida como parametro.*/
@@ -416,5 +417,83 @@ int getNumPistas(char* pista, char* fecha, char* hora){
 	return numFilas;
 }
 
+int imprimirProximosTorneos(){
+	startConn();
+	sqlite3_stmt *stmt;
+	char sql[] = "SELECT * FROM torneo WHERE cod_par_gan IS NULL";
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
 
+	int cod;
+	char fecha[100];
+
+	printf("Proximos torneos:\n\n");
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {
+			cod = sqlite3_column_int(stmt, 0);
+			strcpy(fecha, (char *) sqlite3_column_text(stmt, 1));
+			printf("\t[Codigo de torneo: %d. Fecha: %s]\n\n", cod, fecha);
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	return SQLITE_OK;
+}
+
+int inscripcionesAbiertas(int codTorneo) {
+	char sql[] = "SELECT * FROM torneo WHERE cod_par_gan IS NULL and cod_torneo = ";
+	char str[5];
+  	sprintf(str, "%d", codTorneo);
+    strcat(sql, str);
+	if(getNumFilas(sql) > 0) {
+		return 1;
+	} else{
+		return 0;
+	}
+}
+
+int getCodigoPareja(Usuario usuario1, Usuario usuario2) {
+	char sql[] = "SELECT cod_pareja FROM pareja WHERE (usuario1 = ? AND usuario2 = ?)"
+		"OR (usuario1 = ? AND usuario2 = ?)";
+
+	int codPareja = 0;
+	startConn();
+	sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+	if (result == SQLITE_OK) {
+		sqlite3_bind_text(stmt, 1, usuario1.usuario, strlen(usuario1.usuario), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 2, usuario2.usuario, strlen(usuario2.usuario), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 3, usuario2.usuario, strlen(usuario2.usuario), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 4, usuario1.usuario, strlen(usuario1.usuario), SQLITE_STATIC);
+	} else{
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {			
+			codPareja = sqlite3_column_int(stmt, 0);
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+	return codPareja;
+}

@@ -16,6 +16,9 @@ void imprimirMenuSocio();
 //Imprime el menu de los administradores.
 void imprimirMenuAdmin();
 
+//Imprime el menu de torneos de los socios.
+void imprimirMenuTorneos();
+
 //Imprime los datos del usuario recibido como parametro.
 void imprimirDatosUsuario(Usuario usuario);
 
@@ -28,5 +31,10 @@ void imprimirMenuTienda();
 //Imprime los articulos de una lista pasada por parámetro
 void imprimirArticulos(ListaArticulos listaArticulos);
 
+//Imprime la cabecera de inscripccion a torneos.
+void imprimirInscripcionTorneo();
+
+//Imprime la cabecera del cierre del periodo de inscripcion a un torneo.
+void imprimirCierreInscripciones();
 
 #endif

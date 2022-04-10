@@ -26,6 +26,11 @@ void imprimirMenuAdmin(){
     "3. Descargar informes.\n4. Cerrar sesion.\n5. Salir.\n\n");
 }
 
+void imprimirMenuTorneos() {
+    imprimirTitulo();
+    printf("TORNEOS\n\n1. Inscripciones abiertas.\n2. Proximo torneo.\n3. Volver.\n\n");
+}
+
 void imprimirDatosUsuario(Usuario usuario){
     printf("Usuario:\t%s.\nNombre:\t\t%s.\nApellido:\t%s.\nTelefono:\t%i.\nPuntos:\t\t%i.\nEs socio:\t%i.\n",
     usuario.usuario, usuario.nombre, usuario.apellido, usuario.telefono, usuario.puntos, usuario.esSocio);
@@ -59,5 +64,12 @@ void imprimirArticulos(ListaArticulos listaArticulos){
     }
 }
 
+void imprimirInscripcionTorneo() {
+    imprimirTitulo();
+    printf("INSCRIPCION A TORNEOS\n\n");
+}
 
-
+void imprimirCierreInscripciones() {
+    imprimirTitulo();
+    printf("CIERRE DE INSCRIPCIONES A TORNEOS\n\n");
+}
