@@ -5,8 +5,7 @@
 #include <stdio.h>
 
 void horareserva (char* hora){
-    char num1="0";
-    while (hora[3] != num1 && hora[4] != num1){
+    while (hora[3] != '0' && hora[4] != '0'){
         fflush(stdout);
         printf("Hora seleccionada incorrecta \n Escriba la hora que desea la pista (Recuerda que solo se pueden servar las pista a empunto): hora:minuto  ");
         char* tiempo= (char*)malloc(6*sizeof(char));

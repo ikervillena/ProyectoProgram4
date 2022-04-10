@@ -8,7 +8,6 @@
 #include <string.h>
 
 //Implementaciones de las funciones dirigidas a gestionar el menu de la aplicacion.
-
 void menuPrincipal(){
     imprimirInicio();
     int eleccion;
@@ -341,7 +340,7 @@ void GestionReservas (Usuario u){
     int pistanum;
     while (si=0){
        printf("Escriba el numero de pista que dese reservar: \n");
-        scanff(stdin,"%s",&pistanum);
+        scanf("%d",&pistanum);
         for(int a=0; a<sizeof(numeros);a++){
             if (numeros[a]==pistanum){
                 si=si+1;
