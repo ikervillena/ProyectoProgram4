@@ -53,11 +53,9 @@ char* textoFecha(Fecha fec){
     return texto;
 }
 
-char* fechaActual(){
+char* fechaActual(char* fechayhora){
     time_t t;
     struct tm *tm;
-    char fechayhora[100];
-
     t=time(NULL);
     tm=localtime(&t);
     strftime(fechayhora, 100, "%d/%m/%Y", tm);

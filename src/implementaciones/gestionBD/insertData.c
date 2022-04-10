@@ -4,6 +4,7 @@
 #include "../../declaraciones/gestionBD/crearConexion.h"
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 //SIN TERMINAR
 int insertarTorneo(Fecha fecha) {
@@ -78,7 +79,7 @@ int insertReserva(int codReserva, Usuario u,int numpista, char* fecha, char* hor
 		sqlite3_bind_int(res,1,codReserva);
 		sqlite3_bind_text(res,2,u.usuario,-1,SQLITE_STATIC);
 		sqlite3_bind_int(res,3,numpista);
-		sqlite3_bind_int(res,4,fecha);
+		sqlite3_bind_text(res,4,fecha,-1,SQLITE_STATIC);
 		sqlite3_bind_text(res,5,hora,-1,SQLITE_STATIC);
 		sqlite3_bind_int(res,6,precio);
 		}else{

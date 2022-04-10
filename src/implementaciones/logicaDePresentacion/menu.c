@@ -184,82 +184,82 @@ void menuTienda(Usuario u){
     while(eleccionCorrecta == 0) {
         eleccionCorrecta = 1;
         switch (eleccion) {
-            case 1:
+            case 1: ;
                 ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
                 int b = tamanyoLista(eleccion);
                 listaArticulos = getArticulo(eleccion, b);
                 break;
-            case 2:
-                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
-                int b = tamanyoLista(eleccion);
-                listaArticulos = getArticulo(eleccion, b);
+            case 2: ;
+                ListaArticulos* listaArticulos2 = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b2 = tamanyoLista(eleccion);
+                listaArticulos2 = getArticulo(eleccion, b2);
                 break;
-            case 3:
-                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
-                int b = tamanyoLista(eleccion);
-                listaArticulos = getArticulo(eleccion, b);
+            case 3: ;
+                ListaArticulos* listaArticulos3 = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b3 = tamanyoLista(eleccion);
+                listaArticulos3 = getArticulo(eleccion, b3);
                 break;
-            case 4:
-                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
-                int b = tamanyoLista(eleccion);
-                listaArticulos = getArticulo(eleccion, b);
+            case 4: ;
+                ListaArticulos* listaArticulos4 = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b4 = tamanyoLista(eleccion);
+                listaArticulos4 = getArticulo(eleccion, b4);
                 break;
-            case 5:
-                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
-                int b = tamanyoLista(eleccion);
-                listaArticulos = getArticulo(eleccion, b);
+            case 5: ;
+                ListaArticulos* listaArticulos5 = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b5 = tamanyoLista(eleccion);
+                listaArticulos5 = getArticulo(eleccion, b5);
                 break;
-            case 6:
-                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
-                int b = tamanyoLista(eleccion);
-                listaArticulos = getArticulo(eleccion, b);
+            case 6: ;
+                ListaArticulos* listaArticulos6 = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b6 = tamanyoLista(eleccion);
+                listaArticulos6 = getArticulo(eleccion, b6);
                 break;
-            case 7:
-                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
-                int b = tamanyoLista(eleccion);
-                listaArticulos = getArticulo(eleccion, b);
+            case 7: ;
+                ListaArticulos* listaArticulos7 = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b7 = tamanyoLista(eleccion);
+                listaArticulos7 = getArticulo(eleccion, b7);
                 break;
-            case 8:
-                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
-                int b = tamanyoLista(eleccion);
-                listaArticulos = getArticulo(eleccion, b);
+            case 8: ;
+                ListaArticulos* listaArticulos8 = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b8 = tamanyoLista(eleccion);
+                listaArticulos8 = getArticulo(eleccion, b8);
                 break;
-            case 9:
-                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
-                int b = tamanyoLista(eleccion);
-                listaArticulos = getArticulo(eleccion, b);
+            case 9: ;
+                ListaArticulos* listaArticulos9 = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b9 = tamanyoLista(eleccion);
+                listaArticulos9 = getArticulo(eleccion, b9);
                 break;
-            case 10:
-                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
-                int b = tamanyoLista(eleccion);
-                listaArticulos = getArticulo(eleccion, b);
+            case 10: ;
+                ListaArticulos* listaArticulos10 = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b10 = tamanyoLista(eleccion);
+                listaArticulos10 = getArticulo(eleccion, b10);
                 break;
-            case 11:
-                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
-                int b = tamanyoLista(eleccion);
-                listaArticulos = getArticulo(eleccion, b);
+            case 11: ;
+                ListaArticulos* listaArticulos11 = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b11 = tamanyoLista(eleccion);
+                listaArticulos11 = getArticulo(eleccion, b11);
                 break;
-            case 12:
-                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
-                int b = tamanyoLista(eleccion);
-                listaArticulos = getArticulo(eleccion, b);
+            case 12: ;
+                ListaArticulos* listaArticulos12 = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b12 = tamanyoLista(eleccion);
+                listaArticulos12 = getArticulo(eleccion, b12);
                 break;
-            case 13:
-                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
-                int b = tamanyoLista(eleccion);
-                listaArticulos = getArticulo(eleccion, b);
+            case 13: ;
+                ListaArticulos* listaArticulos13 = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b13 = tamanyoLista(eleccion);
+                listaArticulos13 = getArticulo(eleccion, b13);
                 break;
-            case 14:
-                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
-                int b = tamanyoLista(eleccion);
-                listaArticulos = getArticulo(eleccion, b);
+            case 14: ;
+                ListaArticulos* listaArticulos14 = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b14 = tamanyoLista(eleccion);
+                listaArticulos14 = getArticulo(eleccion, b14);
                 break;
-            case 15:
-                ListaArticulos* listaArticulos = (ListaArticulos*)malloc(sizeof(ListaArticulos));
-                int b = tamanyoLista(eleccion);
-                listaArticulos = getArticulo(eleccion, b);
+            case 15: ;
+                ListaArticulos* listaArticulos15 = (ListaArticulos*)malloc(sizeof(ListaArticulos));
+                int b15 = tamanyoLista(eleccion);
+                listaArticulos15 = getArticulo(eleccion, b15);
                 break;
-            case 16:
+            case 16: ;
                 menuSocio(u);
                 break;
             default: ;
@@ -296,7 +296,8 @@ void menuTienda2(Usuario u, ListaArticulos l){
         fflush(stdin);
         char sql[] = "SELECT * FROM compra"; 
         int codigoCompra = getNumFilas(sql)+1;
-        char* fecha = fechaActual();
+        char* fecha = (char*)malloc(sizeof(char)*100);
+        fecha = fechaActual(fecha);
         int b = insertCompra(codigoCompra, u, l.articulos[indiceArticulo], cantidad, fecha);
 
         printf("La compra ha sido procesada con éxito. Muchas gracias. \n");
