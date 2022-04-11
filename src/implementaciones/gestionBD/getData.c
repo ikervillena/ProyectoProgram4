@@ -750,7 +750,7 @@ ListaCompra *getCompras(int tamanyo){
 			listaCompras->arrayCompras[contador].fecha=strcpy(listaCompras->arrayCompras[contador].fecha,sqlite3_column_text(stmt,4));
 			listaCompras->arrayCompras[contador].fecha[strlen(sqlite3_column_text(stmt,4))]='\0';
 
-			listaCompras->arrayCompras[contador].precio=sqlite3_column_int(stmt, 4);
+			listaCompras->arrayCompras[contador].precio=sqlite3_column_int(stmt, 5);
 					
 			contador++;
 		}

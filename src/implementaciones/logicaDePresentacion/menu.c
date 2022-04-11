@@ -177,8 +177,7 @@ void descargarInformes(){
                 ListaCompra* listaCompras = (ListaCompra*)malloc(sizeof(ListaCompra));
                 listaCompras = getCompras(tamanyo);
                 ficheroCompras(listaCompras);
-
-                printf("Descargar informes.");
+                printf("Informe descargado con exito.\n");
                 break;
             case 5:
                 menuAdmin();

@@ -3,54 +3,54 @@ Fecha: 11/04/2022
 Usuario: PErro
 Codigo de articulo: 33
 Unidades: 2
-Precio total: 11
+Precio total: 140
 
 Codigo de compra: 2
 Fecha: 11/04/2022
 Usuario: PErro
 Codigo de articulo: 16
 Unidades: 2
-Precio total: 11
+Precio total: 0
 
 Codigo de compra: 3
 Fecha: 11/04/2022
 Usuario: PErro
 Codigo de articulo: 45
 Unidades: 3
-Precio total: 11
+Precio total: 225
 
 Codigo de compra: 4
 Fecha: 11/04/2022
 Usuario: PErro
 Codigo de articulo: 55
 Unidades: 4
-Precio total: 11
+Precio total: 100
 
 Codigo de compra: 5
 Fecha: 11/04/2022
 Usuario: PErro
 Codigo de articulo: 32
 Unidades: 2
-Precio total: 11
+Precio total: 200
 
 Codigo de compra: 6
 Fecha: 11/04/2022
 Usuario: PErro
 Codigo de articulo: 28
 Unidades: 5
-Precio total: 11
+Precio total: 15
 
 Codigo de compra: 7
 Fecha: 11/04/2022
 Usuario: PErro
 Codigo de articulo: 51
 Unidades: 3
-Precio total: 11
+Precio total: 240
 
 Codigo de compra: 8
 Fecha: 11/04/2022
 Usuario: PErro
 Codigo de articulo: 58
 Unidades: 1
-Precio total: 11
+Precio total: 45
 
