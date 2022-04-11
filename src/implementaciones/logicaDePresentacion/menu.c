@@ -5,6 +5,7 @@
 #include "../../declaraciones/logicaDeNegocio/reserva.h"
 #include "../../declaraciones/gestionBD/updateData.h"
 #include "../../declaraciones/logicaDeNegocio/torneos.h"
+#include "../../declaraciones/gestionBD/deleteData.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -473,6 +474,19 @@ void cerrarInscripciones() {
     } while (eleccionCorrecta == 0);
 
     printf("eleccion %i\n", eleccion);
+
+    //Cerrar el periodo de inscripciones del torneo (cod_par_gan = 0).
     cierreInscripciones(eleccion);
+
+    int insc = comprobarInscripciones(eleccion);
+    if(insc == 1) {
+        //En caso de exceder el numero maximo, se realiza un sorteo entre los inscritos.
+        reducirParticipantes(eleccion);
+    } else {
+        if(insc == -1) {
+            //En caso de no llegar al numero minimo de inscripciones, se borra el torneo.
+            borrarTorneo(eleccion);
+        }
+    }
     menuAdmin();
 }

@@ -497,3 +497,43 @@ int getCodigoPareja(Usuario usuario1, Usuario usuario2) {
 	}
 	return codPareja;
 }
+
+int getNumInscripciones(int codTorneo) {
+	char sql[] = "SELECT * FROM inscripcion WHERE cod_torneo = ";
+    char str[5];
+  	sprintf(str, "%d", codTorneo);
+    strcat(sql, str);
+    return getNumFilas(sql);
+}
+
+int *getInscripciones(int codTorneo) {
+	startConn();
+	char sql[] = "SELECT cod_pareja FROM inscripcion WHERE cod_torneo = ?";
+	sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+	if (result == SQLITE_OK) {
+		sqlite3_bind_int(stmt, 1, codTorneo);
+	} else{
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+
+	int *parejasInscritas = (int *) malloc(getNumInscripciones(codTorneo) * sizeof(int));
+	int contador = 0;
+
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {			
+			parejasInscritas[contador] = sqlite3_column_int(stmt, 0);
+			contador++;
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+	return parejasInscritas;
+}

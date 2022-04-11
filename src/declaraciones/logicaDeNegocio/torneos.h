@@ -9,4 +9,7 @@
 //Devuelve un -1 si no se alcanza el minimo de parejas para organizar un torneo.
 int comprobarInscripciones(int codTorneo);
 
+//Reduce el numero de inscripciones hasta el maximo permitido, realizando un sorteo entre los inscritos.
+int reducirParticipantes(int codTorneo);
+
 #endif

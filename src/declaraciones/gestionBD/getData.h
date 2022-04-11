@@ -48,4 +48,10 @@ int inscripcionesAbiertas(int codTorneo);
 //Devuelve el codigo de pareja de los usuario provistos si la pareja esta registrada, y un 0 si no lo esta.
 int getCodigoPareja(Usuario usuario1, Usuario usuario2);
 
+//Devuelve el numero de parejas inscritas al torneo provisto como parametro.
+int getNumInscripciones(int codTorneo);
+
+//Devuelve un array con los codigos de las parejas inscritas al torneo provisto como parametro.
+int *getInscripciones(int codTorneo);
+
 #endif
