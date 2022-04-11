@@ -297,7 +297,7 @@ int* getreservas(char* pista,char* fecha,char*hora){
 	do {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {	
-			pistasDisponibles[i] = sqlite3_column_int(result, 0);
+			pistasDisponibles[i] = sqlite3_column_int(stmt, 0);
 			i++;
 		}
 	} while (result == SQLITE_ROW);
@@ -317,7 +317,7 @@ int tamanyoLista(int COD_TIPO_ART){
     sqlite3_stmt *stmt;
 	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
 	if (result == SQLITE_OK) {
-		sqlite3_bind_int(stmt, 1, &COD_TIPO_ART);
+		sqlite3_bind_int(stmt, 1, COD_TIPO_ART);
 	} else{
 		printf("Error preparing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
@@ -325,7 +325,7 @@ int tamanyoLista(int COD_TIPO_ART){
 	do {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {	
-			tamanyo = sqlite3_column_int(result, 0);
+			tamanyo = sqlite3_column_int(stmt, 0);
 		}
 	}while (result == SQLITE_ROW);
 
@@ -345,7 +345,7 @@ ListaArticulos *getArticulo(int COD_TIPO_ART, int tamanyo){
 	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
 
 	if (result == SQLITE_OK) {
-		sqlite3_bind_int(stmt, 1, &COD_TIPO_ART);
+		sqlite3_bind_int(stmt, 1, COD_TIPO_ART);
 	} else{
 		printf("Error preparing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
