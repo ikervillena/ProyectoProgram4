@@ -612,3 +612,76 @@ int ganadorValido(int codTorneo, int codPareja) {
 	}
 	return ganadorValido;
 }
+
+int estaInscrito(int codTorneo, Usuario usuario) {
+	startConn();
+	char sql[] = "SELECT cod_torneo, usuario1, usuario2 FROM inscripcion I, pareja P "
+	"WHERE I.cod_pareja = P.cod_pareja AND I.cod_torneo = ? AND (P.usuario1 = ? OR P.usuario2 = ?)";
+	sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+	if (result == SQLITE_OK) {
+		sqlite3_bind_int(stmt, 1, codTorneo);
+		sqlite3_bind_text(stmt, 2, usuario.usuario, strlen(usuario.usuario), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 3, usuario.usuario, strlen(usuario.usuario), SQLITE_STATIC);
+	} else{
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+
+	int estaInscrito = 0;
+
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {			
+			estaInscrito = 1;
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+	return estaInscrito;
+}
+
+int imprimirSiguientesTorneos(Usuario usuario) {
+	startConn();
+	sqlite3_stmt *stmt;
+	char sql[] = "SELECT * FROM torneo WHERE cod_par_gan = 0";
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	int cod;
+	char fecha[100];
+
+	printf("Proximos torneos:\n\n");
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {
+			cod = sqlite3_column_int(stmt, 0);
+			strcpy(fecha, (char *) sqlite3_column_text(stmt, 1));
+			if(estaInscrito(cod, usuario)){
+				printf("\t[Codigo de torneo: %d. Fecha: %s. Estas inscrito: SI]\n\n", cod, fecha);
+			} else{
+				printf("\t[Codigo de torneo: %d. Fecha: %s. Estas inscrito: NO]\n\n", cod, fecha);
+			}
+			
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	return SQLITE_OK;
+}

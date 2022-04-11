@@ -63,4 +63,10 @@ int imprimirTorneosCerrados();
 //Devuelve un 1 si la pareja esta inscrita al torneo, y un 0 si no lo esta.
 int ganadorValido(int codTorneo, int codPareja);
 
+//Devuelve un 1 si el jugador esta inscrito al torneo, y un 0 si no lo esta.
+int estaInscrito(int codTorneo, Usuario usuario);
+
+//Imprime la informacion de los proximos torneos, e indica si el usuario esta apuntado o no.
+int imprimirSiguientesTorneos(Usuario usuario);
+
 #endif

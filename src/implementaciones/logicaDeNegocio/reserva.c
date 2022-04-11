@@ -14,7 +14,6 @@ void horareserva (char* hora){
         printf("\n ");
         free(tiempo);
     }
-return hora;
 }
 
 

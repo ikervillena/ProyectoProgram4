@@ -198,7 +198,8 @@ void menuTorneos(Usuario usuario){
             inscripcionTorneo(usuario);
             break;
         case 2:
-            //Proximos torneos.
+            imprimirSiguientesTorneos(usuario);
+            system("pause");
             break;
         case 3:
             menuSocio(usuario);
