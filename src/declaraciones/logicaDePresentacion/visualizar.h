@@ -37,4 +37,7 @@ void imprimirInscripcionTorneo();
 //Imprime la cabecera del cierre del periodo de inscripcion a un torneo.
 void imprimirCierreInscripciones();
 
+//Imprime la cabecera de la actualizacion de los ganadores de un torneo.
+void imprimirActualizacionGanadores();
+
 #endif

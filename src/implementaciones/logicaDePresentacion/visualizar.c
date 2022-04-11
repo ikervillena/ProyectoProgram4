@@ -23,7 +23,7 @@ void imprimirMenuSocio(){
 void imprimirMenuAdmin(){
     imprimirTitulo();
     printf("MENU:\n\n1. Crear nuevo torneo.\n2. Cerrar periodo de inscripcion de un torneo.\n"
-    "3. Descargar informes.\n4. Cerrar sesion.\n5. Salir.\n\n");
+    "3. Actualizar ganadores de un torneo.\n4. Descargar informes.\n5. Cerrar sesion.\n6. Salir.\n\n");
 }
 
 void imprimirMenuTorneos() {
@@ -72,4 +72,9 @@ void imprimirInscripcionTorneo() {
 void imprimirCierreInscripciones() {
     imprimirTitulo();
     printf("CIERRE DE INSCRIPCIONES A TORNEOS\n\n");
+}
+
+void imprimirActualizacionGanadores() {
+    imprimirTitulo();
+    printf("ACTUALIZACION DE GANADORES DE UN TORNEO\n\n");
 }

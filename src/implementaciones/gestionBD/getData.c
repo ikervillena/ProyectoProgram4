@@ -537,3 +537,81 @@ int *getInscripciones(int codTorneo) {
 	}
 	return parejasInscritas;
 }
+
+int ganadorAsignado(int codTorneo) {
+	char sql[] = "SELECT * FROM torneo WHERE cod_par_gan = 0 AND cod_torneo = ";
+	char str[5];
+  	sprintf(str, "%d", codTorneo);
+    strcat(sql, str);
+	if(getNumFilas(sql) > 0) {
+		return 0;
+	} else{
+		return 1;
+	}
+}
+
+int imprimirTorneosCerrados() {
+	startConn();
+	sqlite3_stmt *stmt;
+	char sql[] = "SELECT * FROM torneo WHERE cod_par_gan = 0";
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	int cod;
+	char fecha[100];
+
+	printf("Proximos torneos:\n\n");
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {
+			cod = sqlite3_column_int(stmt, 0);
+			strcpy(fecha, (char *) sqlite3_column_text(stmt, 1));
+			printf("\t[Codigo de torneo: %d. Fecha: %s]\n\n", cod, fecha);
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	return SQLITE_OK;
+}
+
+int ganadorValido(int codTorneo, int codPareja) {
+	startConn();
+	char sql[] = "SELECT * FROM inscripcion WHERE cod_torneo = ? AND cod_pareja = ?";
+	sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+	if (result == SQLITE_OK) {
+		sqlite3_bind_int(stmt, 1, codTorneo);
+		sqlite3_bind_int(stmt, 2, codPareja);
+	} else{
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+
+	int ganadorValido = 0;
+
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {			
+			ganadorValido = 1;
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+	return ganadorValido;
+}

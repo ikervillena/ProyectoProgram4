@@ -54,4 +54,13 @@ int getNumInscripciones(int codTorneo);
 //Devuelve un array con los codigos de las parejas inscritas al torneo provisto como parametro.
 int *getInscripciones(int codTorneo);
 
+//Devuelve un 0 si el torneo esta cerrado pero no tiene un ganador asignado, y un 1 en caso contrario.
+int ganadorAsignado(int codTorneo);
+
+//Imprime los torneos cuyo periodo de inscripcion esta cerrado, pero no tienen un ganador asignado.
+int imprimirTorneosCerrados();
+
+//Devuelve un 1 si la pareja esta inscrita al torneo, y un 0 si no lo esta.
+int ganadorValido(int codTorneo, int codPareja);
+
 #endif

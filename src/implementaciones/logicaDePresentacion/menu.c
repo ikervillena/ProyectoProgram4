@@ -125,12 +125,15 @@ void menuAdmin(){
                 cerrarInscripciones();
                 break;
             case 3:
-                printf("Descargar informes.");
+                actualizarGanadores();
                 break;
             case 4:
-                menuPrincipal();
+                printf("Descargar informes.");
                 break;
             case 5:
+                menuPrincipal();
+                break;
+            case 6:
                 system("cls");
                 printf("Fin.\n");
                 break;
@@ -400,6 +403,7 @@ void inscripcionTorneo(Usuario usuario) {
     imprimirProximosTorneos();
     int eleccion;
     int eleccionCorrecta = 0;
+    int salir = 0;
     do
     {
         printf("Escoge un codigo de torneo (0 para volver):\t");
@@ -408,6 +412,71 @@ void inscripcionTorneo(Usuario usuario) {
         if(eleccion == 0) {
             menuTorneos(usuario);
             eleccionCorrecta = 1;
+            salir = 1;
+        } else{
+            if (inscripcionesAbiertas(eleccion) == 1){
+                eleccionCorrecta = 1;
+            } else {
+                printf("Eleccion incorrecta.\n\n");
+            }
+        }
+    } while (eleccionCorrecta == 0);
+    
+    if(salir == 0){ 
+        char nomUsuario[25];
+        eleccionCorrecta = 0;
+        Usuario *companyero;
+        do
+        {
+            printf("\nNombre de usuario de tu pareja ('volver' para volver):\t");
+            scanf("%s", nomUsuario);
+            fflush(stdin);
+            companyero = getUsuario(nomUsuario);
+            printf("%s\n", companyero->nombre);
+            if(strcmp(nomUsuario, "volver") == 0) {
+                menuTorneos(usuario);
+                eleccionCorrecta = 1;
+                salir = 1;
+            } else{
+                if(companyero->esSocio == 1){
+                    eleccionCorrecta = 1;
+                    printf("Es socio.\n");
+                } else {
+                    printf("El nombre de usuario no corresponde a ningun socio.\n");
+                }
+            }
+        } while (eleccionCorrecta == 0);
+        
+        if(salir == 0){
+            //Guardar la pareja en la BD en caso de que no este registrada.
+            if(getCodigoPareja(usuario, *companyero) == 0) insertarPareja(usuario, *companyero);
+
+            //Inscribir a la pareja en el torneo.
+            Pareja pareja = {getCodigoPareja(usuario, *companyero), usuario, *companyero};
+            insertarInscripcion(eleccion, pareja);
+
+            free(companyero);
+            menuTorneos(usuario);
+        }
+    }
+
+}
+
+void cerrarInscripciones() {
+    imprimirCierreInscripciones();
+    imprimirProximosTorneos();
+    int eleccion;
+    int eleccionCorrecta = 0;
+    int salir = 0;
+    do
+    {
+        printf("Escoge un codigo de torneo (0 para volver):\t");
+        scanf("%i", &eleccion);
+        fflush(stdin);
+        if(eleccion == 0) {
+            menuAdmin();
+            eleccionCorrecta = 1;
+            salir = 1;
         } else{
             if (inscripcionesAbiertas(eleccion) == 1){
                 eleccionCorrecta = 1;
@@ -417,45 +486,33 @@ void inscripcionTorneo(Usuario usuario) {
         }
     } while (eleccionCorrecta == 0);
 
-    char nomUsuario[25];
-    eleccionCorrecta = 0;
-    Usuario *companyero;
-    do
-    {
-        printf("\nNombre de usuario de tu pareja ('volver' para volver):\t");
-        scanf("%s", nomUsuario);
-        fflush(stdin);
-        companyero = getUsuario(nomUsuario);
-        printf("%s\n", companyero->nombre);
-        if(strcmp(nomUsuario, "volver") == 0) {
-            menuTorneos(usuario);
-            eleccionCorrecta = 1;
-        } else{
-            if(companyero->esSocio == 1){
-                eleccionCorrecta = 1;
-                printf("Es socio.\n");
-            } else {
-                printf("El nombre de usuario no corresponde a ningun socio.\n");
+    if(salir == 0){
+        printf("eleccion %i\n", eleccion);
+
+        //Cerrar el periodo de inscripciones del torneo (cod_par_gan = 0).
+        cierreInscripciones(eleccion);
+
+        int insc = comprobarInscripciones(eleccion);
+        if(insc == 1) {
+            //En caso de exceder el numero maximo, se realiza un sorteo entre los inscritos.
+            reducirParticipantes(eleccion);
+        } else {
+            if(insc == -1) {
+                //En caso de no llegar al numero minimo de inscripciones, se borra el torneo.
+                borrarTorneo(eleccion);
             }
         }
-    } while (eleccionCorrecta == 0);
+        menuAdmin();
+    }
     
-    //Guardar la pareja en la BD en caso de que no este registrada.
-    if(getCodigoPareja(usuario, *companyero) == 0) insertarPareja(usuario, *companyero);
-
-    //Inscribir a la pareja en el torneo.
-    Pareja pareja = {getCodigoPareja(usuario, *companyero), usuario, *companyero};
-    insertarInscripcion(eleccion, pareja);
-
-    free(companyero);
-    //menuTorneos(usuario);
 }
 
-void cerrarInscripciones() {
-    imprimirCierreInscripciones();
-    imprimirProximosTorneos();
+void actualizarGanadores() {
+    imprimirActualizacionGanadores();
+    imprimirTorneosCerrados();
     int eleccion;
     int eleccionCorrecta = 0;
+    int salir = 0;
     do
     {
         printf("Escoge un codigo de torneo (0 para volver):\t");
@@ -465,7 +522,7 @@ void cerrarInscripciones() {
             menuAdmin();
             eleccionCorrecta = 1;
         } else{
-            if (inscripcionesAbiertas(eleccion) == 1){
+            if (ganadorAsignado(eleccion) == 0){
                 eleccionCorrecta = 1;
             } else {
                 printf("Eleccion incorrecta.\n\n");
@@ -473,20 +530,29 @@ void cerrarInscripciones() {
         }
     } while (eleccionCorrecta == 0);
 
-    printf("eleccion %i\n", eleccion);
-
-    //Cerrar el periodo de inscripciones del torneo (cod_par_gan = 0).
-    cierreInscripciones(eleccion);
-
-    int insc = comprobarInscripciones(eleccion);
-    if(insc == 1) {
-        //En caso de exceder el numero maximo, se realiza un sorteo entre los inscritos.
-        reducirParticipantes(eleccion);
-    } else {
-        if(insc == -1) {
-            //En caso de no llegar al numero minimo de inscripciones, se borra el torneo.
-            borrarTorneo(eleccion);
+    int codTorneo = eleccion;
+    eleccionCorrecta = 0;
+    do
+    {
+        printf("\nIndica el codigo de la pareja ganadora (0 para volver):\t");
+        scanf("%i", &eleccion);
+        fflush(stdin);
+        if(eleccion == 0) {
+            menuAdmin();
+            eleccionCorrecta = 1;
+            salir = 1;
+        } else{
+            if (ganadorValido(codTorneo, eleccion) == 1){
+                eleccionCorrecta = 1;
+                printf("El ganador es valido.");
+            } else {
+                printf("Eleccion incorrecta.\n\n");
+            }
         }
+    } while (eleccionCorrecta == 0);
+
+    if(salir == 0){
+        actualizarGanador(codTorneo, eleccion);
+        menuAdmin();
     }
-    menuAdmin();
 }

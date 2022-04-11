@@ -40,4 +40,7 @@ void inscripcionTorneo(Usuario usuario);
 //Gestiona el cierre del periodo de inscripciones de un torneo.
 void cerrarInscripciones();
 
+//Gestiona la actualizacion del ganador de un torneo por parte del administrador.
+void actualizarGanadores();
+
 #endif
