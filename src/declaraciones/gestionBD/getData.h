@@ -78,10 +78,7 @@ int tamanyoListaCompra();
 //Devuelve una lista con el registro de las compras
 ListaCompra *getCompras(int tamanyo);
 
-//Devuelve el tamanyo de la lista de reservas
-int tamanyoListaReservas();
-
-//Devuelve un array con las reservas
-ListaReservas* getReservas(int tamanyo, char* fecha);
+//Devuelve un informe con las reservas
+void getReservas( char* fecha);
 
 #endif

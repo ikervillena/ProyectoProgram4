@@ -765,29 +765,7 @@ ListaCompra *getCompras(int tamanyo){
 	return listaCompras;
 }
 
-int tamanyoListaReservas(){
-	int tamanyo=0;
-	startConn();
-	char sql[] = "SELECT COUNT(*) FROM reserva";
-    sqlite3_stmt *stmt;
-	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
-	
-	do {
-		result = sqlite3_step(stmt) ;
-		if (result == SQLITE_ROW) {	
-			tamanyo = sqlite3_column_int(stmt, 0);
-		}
-	}while (result == SQLITE_ROW);
-
-	result = sqlite3_finalize(stmt);
-	if (result != SQLITE_OK) {
-		printf("Error finalizing statement (SELECT)\n");
-		printf("%s\n", sqlite3_errmsg(db));
-	}
-	return tamanyo;
-}
-
-ListaReservas *getReservas(int tamanyo, char* fecha){
+void getReservas( char* fecha){
 	startConn();
 	char sql[] = "SELECT * FROM reserva WHERE FECHA = ?";
     sqlite3_stmt *stmt;
@@ -799,32 +777,18 @@ ListaReservas *getReservas(int tamanyo, char* fecha){
 		printf("Error preparing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
 	}
-
-	ListaReservas * listaReservas = (ListaReservas*)malloc(sizeof(ListaReservas));
-	listaReservas->tamanyo=tamanyo;
-	listaReservas->arrayReservas = (Reservas*)malloc(sizeof(Reservas));
-	int contador = 0;
+	FILE* f;
+	f= fopen ("InformeReservas.txt","w");
+	fprintf(f, "Reservas del dia %s\n", fecha);
 	do {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {			
-			listaReservas->arrayReservas[contador].codigo=sqlite3_column_int(stmt, 0);
-			listaReservas->arrayReservas[contador].usuario=(char *) malloc((strlen(sqlite3_column_text(stmt,1)) + 1)*sizeof(char));
-			listaReservas->arrayReservas[contador].usuario=strcpy(listaReservas->arrayReservas[contador].usuario,sqlite3_column_text(stmt,1));
-			listaReservas->arrayReservas[contador].usuario[strlen(sqlite3_column_text(stmt,1))]='\0';
 
-			listaReservas->arrayReservas[contador].numPista=sqlite3_column_int(stmt, 2);
-			
-			listaReservas->arrayReservas[contador].fecha=(char *) malloc((strlen(sqlite3_column_text(stmt,3)) + 1)*sizeof(char));
-			listaReservas->arrayReservas[contador].fecha=strcpy(listaReservas->arrayReservas[contador].fecha,sqlite3_column_text(stmt,3));
-			listaReservas->arrayReservas[contador].fecha[strlen(sqlite3_column_text(stmt,3))]='\0';
-
-			listaReservas->arrayReservas[contador].hora=(char *) malloc((strlen(sqlite3_column_text(stmt,4)) + 1)*sizeof(char));
-			listaReservas->arrayReservas[contador].hora=strcpy(listaReservas->arrayReservas[contador].hora,sqlite3_column_text(stmt,4));
-			listaReservas->arrayReservas[contador].hora[strlen(sqlite3_column_text(stmt,4))]='\0';
-
-			listaReservas->arrayReservas[contador].precio = sqlite3_column_int(stmt, 5);
-					
-			contador++;
+			fprintf(f,"Codigo de reserva: %i\n", sqlite3_column_int(stmt, 0));
+			fprintf(f,"Usuario: %s\n", sqlite3_column_text(stmt,1));
+			fprintf(f,"Numero de pista: %i\n", sqlite3_column_int(stmt, 2));
+			fprintf(f,"Hora de reserva: %s\n", sqlite3_column_text(stmt,4));
+			fprintf(f,"Precio: %i\n\n", sqlite3_column_int(stmt, 5));
 		}
 	} while (result == SQLITE_ROW);
 
@@ -832,6 +796,5 @@ ListaReservas *getReservas(int tamanyo, char* fecha){
 	if (result != SQLITE_OK) {
 		printf("Error finalizing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
-	}
-	return listaReservas;
+	};
 }

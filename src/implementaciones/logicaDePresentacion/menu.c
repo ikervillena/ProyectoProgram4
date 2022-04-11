@@ -163,32 +163,27 @@ void descargarInformes(){
         eleccionCorrecta = 1;
         switch (eleccion) {
             case 1:;
-                int tamanyoListaReservas = tamanyoListaCompra();
-                ListaReservas* listaReservas = (ListaReservas*)malloc(sizeof(ListaReservas));
                 printf("Escriba el dia del que desea descargar el informe de reservas: dd-ms-anyo \n ");
                 char* fecha;
                 fecha=(char*)malloc(11*sizeof(char));
                 scanf("%s",fecha);
                 printf("\n ");
                 fflush(stdin);
-                listaReservas = getReservas(tamanyoListaReservas, fecha);
-                ficheroReservas(listaReservas);
+                getReservas(fecha);
                 printf("Informe descargado con exito.\n");
+                system("pause");
+                menuAdmin();
                 break;
-            case 2:
-                cerrarInscripciones();
-                break;
-            case 3:
-                actualizarGanadores();
-                break;
-            case 4:;
+            case 2:;
                 int tamanyo = tamanyoListaCompra();
                 ListaCompra* listaCompras = (ListaCompra*)malloc(sizeof(ListaCompra));
                 listaCompras = getCompras(tamanyo);
                 ficheroCompras(listaCompras);
                 printf("Informe descargado con exito.\n");
+                system("pause");
+                menuAdmin();
                 break;
-            case 5:
+            case 3:
                 menuAdmin();
                 break;
             default: ;
