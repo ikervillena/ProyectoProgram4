@@ -99,4 +99,22 @@ typedef struct{
     int tamanyo;
 }ListaCompra;
 
+typedef struct 
+{
+    int codigo;
+    char* usuario;
+    int numPista;
+    char* fecha;
+    char* hora;
+    int precio;
+} Reservas;
+
+typedef struct 
+{
+    int tamanyo;
+    Reservas* arrayReservas;
+}ListaReservas;
+
+
+
 #endif

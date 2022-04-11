@@ -163,8 +163,18 @@ void descargarInformes(){
     while(eleccionCorrecta == 0) {
         eleccionCorrecta = 1;
         switch (eleccion) {
-            case 1:
-                crearTorneo();
+            case 1:;
+                int tamanyoListaReservas = tamanyoListaCompra();
+                ListaReservas* listaReservas = (ListaReservas*)malloc(sizeof(ListaReservas));
+                printf("Escriba el dia del que desea descargar el informe de reservas: dd-ms-anyo \n ");
+                char* fecha;
+                fecha=(char*)malloc(11*sizeof(char));
+                scanf("%s",fecha);
+                printf("\n ");
+                fflush(stdin);
+                listaReservas = getReservas(tamanyoListaReservas, fecha);
+                ficheroReservas(listaReservas);
+                printf("Informe descargado con exito.\n");
                 break;
             case 2:
                 cerrarInscripciones();

@@ -4,4 +4,6 @@
 
 void ficheroCompras(ListaCompra* listaCompra);
 
+void ficheroReservas(ListaReservas* listaReservas);
+
 #endif
