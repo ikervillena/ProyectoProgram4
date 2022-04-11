@@ -214,6 +214,7 @@ void menuTorneos(Usuario usuario){
 }
 
 void menuTienda(Usuario u){
+    printf("FFFFFF");
     imprimirMenuTienda();
     int eleccion;
     int eleccionCorrecta = 0;
