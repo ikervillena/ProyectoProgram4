@@ -161,3 +161,44 @@ int insertarPareja(Usuario jugador1, Usuario jugador2) {
 
 	return SQLITE_OK;
 }
+
+int insertarUsuario(Usuario usuario) {
+	startConn();
+    sqlite3_stmt *stmt;
+	char sql[] = "INSERT INTO usuario VALUES (?, ?, ?, ?, ?, ?, 100, ?)";
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (INSERT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	result = sqlite3_bind_text(stmt, 1, usuario.usuario, strlen(usuario.usuario), SQLITE_STATIC);
+	result = sqlite3_bind_text(stmt, 2, usuario.contrasenya, strlen(usuario.contrasenya), SQLITE_STATIC);
+	result = sqlite3_bind_text(stmt, 3, usuario.nombre, strlen(usuario.nombre), SQLITE_STATIC);
+	result = sqlite3_bind_text(stmt, 4, usuario.apellido, strlen(usuario.apellido), SQLITE_STATIC);
+	result = sqlite3_bind_text(stmt, 5, textoFecha(usuario.fecNac), strlen(textoFecha(usuario.fecNac)), SQLITE_STATIC);
+	result = sqlite3_bind_int(stmt, 6, usuario.telefono);
+	result = sqlite3_bind_text(stmt, 7, (usuario.esSocio == 1 ? "SI" : "NO"), 2, SQLITE_STATIC);
+
+	if (result != SQLITE_OK) {
+		printf("Error binding parameters\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	result = sqlite3_step(stmt);
+	if (result != SQLITE_DONE) {
+		printf("Error inserting new data\n");
+		return result;
+	}
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (INSERT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	return SQLITE_OK;
+}

@@ -56,31 +56,75 @@ void iniciarSesion(){
             printf("La contrasenya no es valida.\n");
         }
     }
+    free(usuario);
+    free(contrasenya);
 }
 
 void crearCuenta(){
     imprimirTitulo();
     printf("CREACION DE CUENTA:\n\nUsuario:\t");
-    char *usuario = malloc(20*sizeof(char));
+    char usuario[20];
     int usuarioCorrecto = 0;
     while(!usuarioCorrecto){
-        scanf("%s", usuario);
-        //Hay que cambiar la sentencia del if.
-        if(strcmp(usuario, "ikervillena") == 0){
+        char user[20];
+        scanf("%s", user);
+        fflush(stdin);
+        if(usuarioLibre(user) == 0){
             printf("El usuario ya existe, elige otro por favor.\nUsuario:\t");
         } else{
             usuarioCorrecto = 1;
+            strcpy(usuario, user);
         }
     }
+    char *contrasenya = malloc(20 * sizeof(char));
     char *nombre = malloc(20*sizeof(char));
     char *apellido = malloc(20*sizeof(char));
+    char *fecNac = malloc(20 * sizeof(char));
+    int telefono;
+    int esSocio;
+
+
+    printf("\nContrasenya:\t");
+    scanf("%s", contrasenya);
+    fflush(stdin);
     printf("\nNombre:\t");
     scanf("%s", nombre);
+    fflush(stdin);
     printf("\nApellido\t");
     scanf("%s", apellido);
-    system("cls");
-    printf("%s", usuario);
-    //Sin terminar 
+    fflush(stdin);
+    printf("\nFecha de nacimiento (formato dd-mm-aaaa):\t");
+    scanf("%s", fecNac);
+    fflush(stdin);
+    printf("\nTelefono:\t");
+    scanf("%i", &telefono);
+    fflush(stdin);
+
+    int eleccionCorrecta = 0;
+    while(eleccionCorrecta == 0){
+        char socio[5];
+        printf("\nInscribirse como socio (SI/NO):\t");
+        scanf("%s", socio);
+        fflush(stdin);
+        if(strcmp(socio, "SI") == 0){
+            esSocio = 1, eleccionCorrecta = 1;
+        } else{
+            if(strcmp(socio, "NO") == 0) {
+                esSocio = 0, eleccionCorrecta = 1;
+            } else{
+                printf("Eleccion incorrecta.\n");
+            }
+        }
+    }
+    printf("Usuario: %s. Nombre: %s. Apellido: %s. FecNac: %s. Telefono: %i. Socio: %s.\n", 
+    usuario, nombre, apellido, fecNac, telefono, esSocio == 1 ? "SI":"NO");
+    Usuario nuevoUsuario = {usuario, contrasenya, nombre, apellido, getFecha(fecNac), telefono, esSocio};
+    insertarUsuario(nuevoUsuario);
+    free(contrasenya);
+    free(nombre);
+    free(apellido);
+    free(fecNac);
+    menuPrincipal();
 }
 
 void crearTorneo(){

@@ -17,4 +17,7 @@ int insertarInscripcion(int codTorneo, Pareja pareja);
 //Registra una pareja en la BD.
 int insertarPareja(Usuario jugador1, Usuario jugador2);
 
+//Registra en la BD el usuario recibido como parametro.
+int insertarUsuario(Usuario usuario);
+
 #endif

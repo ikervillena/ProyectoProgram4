@@ -690,3 +690,14 @@ int imprimirSiguientesTorneos(Usuario usuario) {
 
 	return SQLITE_OK;
 }
+
+int usuarioLibre(char *nomUsuario) {
+	char sql[] = "SELECT * FROM usuario WHERE usuario = '";
+	strcat(sql, nomUsuario);
+	strcat(sql, "'");
+	if(getNumFilas(sql) > 0) {
+		return 0;
+	} else{
+		return 1;
+	}
+}

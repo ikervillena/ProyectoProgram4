@@ -69,4 +69,7 @@ int estaInscrito(int codTorneo, Usuario usuario);
 //Imprime la informacion de los proximos torneos, e indica si el usuario esta apuntado o no.
 int imprimirSiguientesTorneos(Usuario usuario);
 
+//Devuelve un 1 si el usuario esta libre, y un 0 si ya esta en uso.
+int usuarioLibre(char *nomUsuario);
+
 #endif
