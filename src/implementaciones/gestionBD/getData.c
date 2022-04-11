@@ -285,8 +285,8 @@ int* getreservas(char* pista,char* fecha,char*hora){
 
 	if (result == SQLITE_OK) {
 		sqlite3_bind_text(stmt, 1, pista, strlen(pista), SQLITE_STATIC);
-		sqlite3_bind_text(stmt, 1, fecha, strlen(fecha), SQLITE_STATIC);
-		sqlite3_bind_text(stmt, 1, hora, strlen(hora), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 2, fecha, strlen(fecha), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 3, hora, strlen(hora), SQLITE_STATIC);
 
 	} else{
 		printf("Error preparing statement (SELECT)\n");
@@ -392,8 +392,8 @@ int getNumPistas(char* pista, char* fecha, char* hora){
 	
 	if (result == SQLITE_OK) {
 		sqlite3_bind_text(stmt, 1, pista, strlen(pista), SQLITE_STATIC);
-		sqlite3_bind_text(stmt, 1, fecha, strlen(fecha), SQLITE_STATIC);
-		sqlite3_bind_text(stmt, 1, hora, strlen(hora), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 2, fecha, strlen(fecha), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 3, hora, strlen(hora), SQLITE_STATIC);
 
 	} else{
 		printf("Error preparing statement (SELECT)\n");

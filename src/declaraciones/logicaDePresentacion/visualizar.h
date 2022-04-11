@@ -15,7 +15,6 @@ void imprimirMenuSocio();
 
 //Imprime el menu de los administradores.
 void imprimirMenuAdmin();
-
 //Imprime el menu de torneos de los socios.
 void imprimirMenuTorneos();
 

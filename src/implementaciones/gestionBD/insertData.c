@@ -70,7 +70,7 @@ int insertReserva(int codReserva, Usuario u,int numpista, char* fecha, char* hor
 	int rc;
 	char *err_msg=0;
 	sqlite3_stmt *res;
-	char *sql ="INSERT INTO reserva (COD_RES, USUARIO, NUM_PISTA,FECHA,HORA INICIO,PRECIO) VALUES (?,?,?,?,?,?);";
+	char *sql ="INSERT INTO reserva (COD_RES, USUARIO, NUM_PISTA,FECHA,HORA,PRECIO) VALUES (?,?,?,?,?,?);";
 	rc=sqlite3_prepare_v2(db,sql,-1,&res,0);
 	
 	if (rc==SQLITE_OK){

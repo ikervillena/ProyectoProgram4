@@ -364,29 +364,35 @@ void GestionReservas (Usuario u){
     printf("AREA DE RESERVAS DE USUARIO\n");
     printf("\n");
     int pistasdisponibles=0;
-    char* nompist;
-    char* fecha;
-    char* hora;
-    while (pistasdisponibles=0){
+    char *nompist;
+    char *fecha;
+    char *hora ;
+    while(pistasdisponibles==0){
         printf("Escriba el tipo de pista que desea:\n ");
         printf("-indoor\n -outdoor\n");
+        nompist=(char*)malloc(8*sizeof(char));
         scanf("%s",nompist);
         fflush(stdin);
 
         printf("Escriba el dia que desea la pista: dd-ms-anyo \n ");
+        fecha=(char*)malloc(11*sizeof(char));
         scanf("%s",fecha);
         printf("\n ");
-
         fflush(stdin);
-        printf("Escriba la hora que desea la pista (Recuerda que solo se pueden servar las pista a empunto): hora:minuto  "); 
+
+
+        printf("Escriba la hora que desea la pista (Recuerda que solo se pueden servar las pista a empunto): hora:minuto \n"); 
+        hora=(char*)malloc(6*sizeof(char));
         scanf("%s",hora);
         printf("\n ");
         fflush(stdin);
-
         horareserva(hora);
+
         pistasdisponibles=getNumPistas(nompist,fecha,hora);
-        if(pistasdisponibles=0){
-        printf("En el dia y hora que has seleccionado no hay pistas %s disponibles \n",nompist);
+    
+        
+        if(pistasdisponibles==0){
+            printf("En el dia y hora que has seleccionado no hay pistas %s disponibles \n",nompist);
         }
     }
     printf("\n ");
@@ -394,23 +400,27 @@ void GestionReservas (Usuario u){
     imprimirPistas(numeros);
     int si=0;
     int pistanum;
-    while (si=0){
+    while (si==0){
+       printf("\n");
        printf("Escriba el numero de pista que dese reservar: \n");
         scanf("%d",&pistanum);
         for(int a=0; a<sizeof(numeros);a++){
             if (numeros[a]==pistanum){
                 si=si+1;
             }
-            else{
-               printf("El numero de pista que ha elegido no esta disponible \n"); 
-            }
         }
+        if(si==0){
+            printf("El numero de pista que ha elegido no esta disponible \n"); 
+            }
     }
     char sql[]=("SELECT * FROM reserva");
     int filas=getNumFilas(sql);
     int b = insertReserva(filas+1,u,pistanum,fecha,hora,8);
+    printf("\n");
 
-    printf("La reserva ha sido procesada con éxito. Muchas gracias. \n");
+    printf("La reserva ha sido procesada con exito. Muchas gracias.\n");
+    printf("\n");
+    menuSocio(u);
     
 }
         
