@@ -72,4 +72,10 @@ int imprimirSiguientesTorneos(Usuario usuario);
 //Devuelve un 1 si el usuario esta libre, y un 0 si ya esta en uso.
 int usuarioLibre(char *nomUsuario);
 
+//Devuelve el tamaño de el registro de la lista de compras
+int tamanyoListaCompra();
+
+//Devuelve una lista con el registro de las compras
+ListaCompra *getCompras(int tamanyo);
+
 #endif

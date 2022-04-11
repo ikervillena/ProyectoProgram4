@@ -6,6 +6,7 @@
 #include "../../declaraciones/gestionBD/updateData.h"
 #include "../../declaraciones/logicaDeNegocio/torneos.h"
 #include "../../declaraciones/gestionBD/deleteData.h"
+#include "../../declaraciones/logicaDeNegocio/informes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -152,6 +153,46 @@ void crearTorneo(){
     }
 }
 
+void descargarInformes(){
+    imprimirMenuInformes();
+    int eleccion;
+    int eleccionCorrecta = 0;
+    printf("Escoge una opcion:\t");
+    scanf("%i", &eleccion);
+    fflush(stdin);
+    while(eleccionCorrecta == 0) {
+        eleccionCorrecta = 1;
+        switch (eleccion) {
+            case 1:
+                crearTorneo();
+                break;
+            case 2:
+                cerrarInscripciones();
+                break;
+            case 3:
+                actualizarGanadores();
+                break;
+            case 4:;
+                int tamanyo = tamanyoListaCompra();
+                ListaCompra* listaCompras = (ListaCompra*)malloc(sizeof(ListaCompra));
+                listaCompras = getCompras(tamanyo);
+                ficheroCompras(listaCompras);
+
+                printf("Descargar informes.");
+                break;
+            case 5:
+                menuAdmin();
+                break;
+            default: ;
+                printf("Eleccion incorrecta.\nVuelve a escoger una opcion:\t");
+                scanf("%i", &eleccion);
+                fflush(stdin);
+                eleccionCorrecta = 0;
+        }
+
+    }
+}
+
 void menuAdmin(){
     imprimirMenuAdmin();
     int eleccion;
@@ -172,7 +213,7 @@ void menuAdmin(){
                 actualizarGanadores();
                 break;
             case 4:
-                printf("Descargar informes.");
+                descargarInformes();
                 break;
             case 5:
                 menuPrincipal();
@@ -189,6 +230,7 @@ void menuAdmin(){
         }
     }
 }
+
 
 void menuSocio(Usuario usuario) {
     imprimirMenuSocio();
@@ -637,3 +679,4 @@ void actualizarGanadores() {
         menuAdmin();
     }
 }
+

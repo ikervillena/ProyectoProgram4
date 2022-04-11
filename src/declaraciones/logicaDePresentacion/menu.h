@@ -43,4 +43,7 @@ void cerrarInscripciones();
 //Gestiona la actualizacion del ganador de un torneo por parte del administrador.
 void actualizarGanadores();
 
+//Gestiona el menu de descarga de informes. 
+void descargarInformes();
+
 #endif

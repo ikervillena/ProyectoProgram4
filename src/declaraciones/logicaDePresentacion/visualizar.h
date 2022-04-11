@@ -39,4 +39,7 @@ void imprimirCierreInscripciones();
 //Imprime la cabecera de la actualizacion de los ganadores de un torneo.
 void imprimirActualizacionGanadores();
 
+//Imprime el menu de informes. 
+void imprimirMenuInformes();
+
 #endif

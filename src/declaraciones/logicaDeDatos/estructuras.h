@@ -85,4 +85,18 @@ typedef struct{
 	Articulo *articulos;
 }ListaArticulos;
 
+typedef struct{
+    int codigo;
+    char* usuario;
+    int codArt;
+    int cantidad;
+    char* fecha;
+    int precio;
+}Compra;
+
+typedef struct{
+    Compra* arrayCompras;
+    int tamanyo;
+}ListaCompra;
+
 #endif

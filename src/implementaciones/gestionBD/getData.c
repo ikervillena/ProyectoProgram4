@@ -701,3 +701,66 @@ int usuarioLibre(char *nomUsuario) {
 		return 1;
 	}
 }
+
+int tamanyoListaCompra(){
+	int tamanyo=0;
+	startConn();
+	char sql[] = "SELECT COUNT(*) FROM compra";
+    sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+	
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {	
+			tamanyo = sqlite3_column_int(stmt, 0);
+		}
+	}while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+	return tamanyo;
+}
+
+ListaCompra *getCompras(int tamanyo){
+	startConn();
+	char sql[] = "SELECT * FROM compra ";
+    sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+	ListaCompra *listaCompras=(ListaCompra*)malloc(tamanyo*sizeof(ListaCompra));
+	listaCompras->tamanyo=tamanyo;
+	listaCompras->arrayCompras = (Compra*)malloc(sizeof(Compra));
+	int contador = 0;
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {			
+			listaCompras->arrayCompras[contador].codigo=sqlite3_column_int(stmt, 0);
+			listaCompras->arrayCompras[contador].usuario=(char *) malloc((strlen(sqlite3_column_text(stmt,1)) + 1)*sizeof(char));
+			listaCompras->arrayCompras[contador].usuario=strcpy(listaCompras->arrayCompras[contador].usuario,sqlite3_column_text(stmt,1));
+			listaCompras->arrayCompras[contador].usuario[strlen(sqlite3_column_text(stmt,1))]='\0';
+
+			listaCompras->arrayCompras[contador].codArt=sqlite3_column_int(stmt, 2);
+			
+			listaCompras->arrayCompras[contador].cantidad=sqlite3_column_int(stmt, 3);
+			
+			listaCompras->arrayCompras[contador].fecha=(char *) malloc((strlen(sqlite3_column_text(stmt,4)) + 1)*sizeof(char));
+			listaCompras->arrayCompras[contador].fecha=strcpy(listaCompras->arrayCompras[contador].fecha,sqlite3_column_text(stmt,4));
+			listaCompras->arrayCompras[contador].fecha[strlen(sqlite3_column_text(stmt,4))]='\0';
+
+			listaCompras->arrayCompras[contador].precio=sqlite3_column_int(stmt, 4);
+					
+			contador++;
+		}
+
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+	return listaCompras;
+}

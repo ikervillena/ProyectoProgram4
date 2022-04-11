@@ -79,3 +79,12 @@ void imprimirActualizacionGanadores() {
     imprimirTitulo();
     printf("ACTUALIZACION DE GANADORES DE UN TORNEO\n\n");
 }
+
+void imprimirMenuInformes(){
+    imprimirTitulo();
+    printf("1. Imprimir informe de reservas.\n");
+    printf("2. Imprimir listado de inscripciones a un torneo.\n");
+    printf("3. Imprimir historico de torneos.\n");
+    printf("4. Imprimir listado de ventas.\n");
+    printf("5. Volver.\n.");
+}
