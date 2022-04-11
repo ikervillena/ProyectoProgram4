@@ -259,7 +259,7 @@ void menuTorneos(Usuario usuario){
 }
 
 void menuTienda(Usuario u){
-    imprimirMenuTienda();
+   imprimirMenuTienda();
     int eleccion;
     int eleccionCorrecta = 0;
     printf("Escoge el tipo de articulo que desees comprar:\t");
@@ -372,9 +372,7 @@ void menuTienda(Usuario u){
 
 void menuTienda2(Usuario u, ListaArticulos l){ 
     imprimirArticulos(l);
-   
     int eleccion;
-    int cantidad;
     int eleccionCorrecta = 0;
     printf("Escoge el codigo del articulo que desees comprar:\t");
     scanf("%i", &eleccion);
@@ -391,16 +389,29 @@ void menuTienda2(Usuario u, ListaArticulos l){
     }
     if (existeCodigoArticulo==1)
     {
+        int cantidad;
         printf("Seleccione la cantidad que desea comprar: \t");
         scanf("%i", &cantidad);
         fflush(stdin);
         char sql[] = "SELECT * FROM compra"; 
         int codigoCompra = getNumFilas(sql)+1;
         char* fecha = (char*)malloc(sizeof(char)*100);
+        printf("\n");
         fecha = fechaActual(fecha);
         int b = insertCompra(codigoCompra, u, l.articulos[indiceArticulo], cantidad, fecha);
 
         printf("La compra ha sido procesada con exito. Muchas gracias. \n");
+        printf("Si quiere volver al menu de la tienda introduzca un 1, para salir introduzca un 0.\n");
+        int eleccionSalida;
+        scanf("%i",&eleccionSalida);
+        if (eleccionSalida==1){
+            menuTienda(u);
+        }else{
+            system("cls");
+            printf("Fin.\n");
+        }
+
+
 
     }
 }

@@ -59,10 +59,10 @@ int insertCompra(int codCompra, Usuario u, Articulo a, int cantidad, char * f){
 		fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(db));
 	}
 	int step=sqlite3_step(res);
-	printf("%i",step);
 	sqlite3_finalize(res);
 
 	return step;
+	
 	
 }
 
