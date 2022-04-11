@@ -215,7 +215,6 @@ void menuTorneos(Usuario usuario){
 }
 
 void menuTienda(Usuario u){
-    printf("FFFFFF");
     imprimirMenuTienda();
     int eleccion;
     int eleccionCorrecta = 0;
@@ -329,6 +328,7 @@ void menuTienda(Usuario u){
 
 void menuTienda2(Usuario u, ListaArticulos l){ 
     imprimirArticulos(l);
+   
     int eleccion;
     int cantidad;
     int eleccionCorrecta = 0;
@@ -356,11 +356,10 @@ void menuTienda2(Usuario u, ListaArticulos l){
         fecha = fechaActual(fecha);
         int b = insertCompra(codigoCompra, u, l.articulos[indiceArticulo], cantidad, fecha);
 
-        printf("La compra ha sido procesada con éxito. Muchas gracias. \n");
+        printf("La compra ha sido procesada con exito. Muchas gracias. \n");
 
     }
 }
-
 void GestionReservas (Usuario u){
     printf("AREA DE RESERVAS DE USUARIO\n");
     printf("\n");

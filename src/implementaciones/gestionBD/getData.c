@@ -351,29 +351,34 @@ ListaArticulos *getArticulo(int COD_TIPO_ART, int tamanyo){
 		printf("%s\n", sqlite3_errmsg(db));
 	}
 	ListaArticulos *listaArticulos=(ListaArticulos*)malloc(tamanyo*sizeof(ListaArticulos));
-
-	Articulo *articulo = (Articulo*)malloc(sizeof(Articulo));
+	listaArticulos->tamanyo=tamanyo;
+	listaArticulos->articulos = (Articulo*)malloc(sizeof(Articulo));
+	int contador = 0;
 	do {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {			
 			
-			listaArticulos->articulos->codigo=sqlite3_column_int(stmt, 0);
-			listaArticulos->articulos->tipo=(char *) malloc((strlen(sqlite3_column_text(stmt,1)) + 1)*sizeof(char));
-			listaArticulos->articulos->tipo=strcpy(articulo->tipo,sqlite3_column_text(stmt,1));
-			listaArticulos->articulos->tipo[strlen(sqlite3_column_text(stmt,1))]='\0';
-			listaArticulos->articulos->marca=(char *) malloc((strlen(sqlite3_column_text(stmt,2)) + 1)*sizeof(char));
-			listaArticulos->articulos->marca=strcpy(articulo->marca,sqlite3_column_text(stmt,2));
-			listaArticulos->articulos->marca[strlen(sqlite3_column_text(stmt,2))]='\0';
-			listaArticulos->articulos->nombre=(char *) malloc((strlen(sqlite3_column_text(stmt,3)) + 1)*sizeof(char));
-			listaArticulos->articulos->nombre=strcpy(articulo->nombre,sqlite3_column_text(stmt,3));
-			listaArticulos->articulos->nombre[strlen(sqlite3_column_text(stmt,3))]='\0';
-			listaArticulos->articulos->descripcion=(char *) malloc((strlen(sqlite3_column_text(stmt,4)) + 1)*sizeof(char));
-			listaArticulos->articulos->descripcion=strcpy(articulo->nombre,sqlite3_column_text(stmt,4));
-			listaArticulos->articulos->descripcion[strlen(sqlite3_column_text(stmt,4))]='\0';
-			listaArticulos->articulos->precio=(char *) malloc((strlen(sqlite3_column_text(stmt,5)) + 1)*sizeof(char));
-			listaArticulos->articulos->precio=strcpy(articulo->precio,sqlite3_column_text(stmt,5));
-			listaArticulos->articulos->precio[strlen(sqlite3_column_text(stmt,5))]='\0';
+			listaArticulos->articulos[contador].codigo=sqlite3_column_int(stmt, 0);
+			listaArticulos->articulos[contador].tipo=(char *) malloc((strlen(sqlite3_column_text(stmt,1)) + 1)*sizeof(char));
+			listaArticulos->articulos[contador].tipo=strcpy(listaArticulos->articulos[contador].tipo,sqlite3_column_text(stmt,1));
+			listaArticulos->articulos[contador].tipo[strlen(sqlite3_column_text(stmt,1))]='\0';
+			listaArticulos->articulos[contador].marca=(char *) malloc((strlen(sqlite3_column_text(stmt,2)) + 1)*sizeof(char));
+			listaArticulos->articulos[contador].marca=strcpy(listaArticulos->articulos[contador].marca,sqlite3_column_text(stmt,2));
+			listaArticulos->articulos[contador].marca[strlen(sqlite3_column_text(stmt,2))]='\0';
+			listaArticulos->articulos[contador].nombre=(char *) malloc((strlen(sqlite3_column_text(stmt,3)) + 1)*sizeof(char));
+			listaArticulos->articulos[contador].nombre=strcpy(listaArticulos->articulos[contador].nombre,sqlite3_column_text(stmt,3));
+			listaArticulos->articulos[contador].nombre[strlen(sqlite3_column_text(stmt,3))]='\0';
+			listaArticulos->articulos[contador].descripcion=(char *) malloc((strlen(sqlite3_column_text(stmt,4)) + 1)*sizeof(char));
+			listaArticulos->articulos[contador].descripcion=strcpy(listaArticulos->articulos[contador].descripcion,sqlite3_column_text(stmt,4));
+			listaArticulos->articulos[contador].descripcion[strlen(sqlite3_column_text(stmt,4))]='\0';
+			listaArticulos->articulos[contador].precio=(char *) malloc((strlen(sqlite3_column_text(stmt,5)) + 1)*sizeof(char));
+			listaArticulos->articulos[contador].precio=strcpy(listaArticulos->articulos[contador].precio,sqlite3_column_text(stmt,5));
+			listaArticulos->articulos[contador].precio[strlen(sqlite3_column_text(stmt,5))]='\0';
+			
+			contador++;
+			
 		}
+
 	} while (result == SQLITE_ROW);
 
 	result = sqlite3_finalize(stmt);

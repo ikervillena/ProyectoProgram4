@@ -57,10 +57,11 @@ void imprimirPistas(int* numeros) {
 }  
 
 void imprimirArticulos(ListaArticulos listaArticulos){
+  
     for (int i = 0; i<listaArticulos.tamanyo;i++){
-    printf("Código de articulo: %i", listaArticulos.articulos[i].codigo);
-    printf("%s : %s \n", listaArticulos.articulos[i].nombre, listaArticulos.articulos[i].descripcion);    
-    printf("Su precio es de %s € \n\n", listaArticulos.articulos[i].precio);
+        printf("Codigo de articulo: %i\n", listaArticulos.articulos[i].codigo);
+        printf("%s : %s \n", listaArticulos.articulos[i].nombre, listaArticulos.articulos[i].descripcion);    
+        printf("Su precio es de %s euros \n\n", listaArticulos.articulos[i].precio);
     }
 }
 
