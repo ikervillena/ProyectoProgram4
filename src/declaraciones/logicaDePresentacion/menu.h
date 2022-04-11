@@ -26,7 +26,7 @@ void menuTorneos(Usuario usuario);
 void crearTorneo();
 
 //Gestiona la reservas de pista de la aplicacion.
-void GestionReservas ();
+void GestionReservas (Usuario u);
 
 //Gestiona la primera venta del menu de la tienda. 
 void menuTienda(Usuario usuario);

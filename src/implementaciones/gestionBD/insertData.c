@@ -84,7 +84,6 @@ int insertReserva(int codReserva, Usuario u,int numpista, char* fecha, char* hor
 		fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(db));
 	}
 	int step=sqlite3_step(res);
-	printf("%i",step);
 	sqlite3_finalize(res);
 
 	return step;

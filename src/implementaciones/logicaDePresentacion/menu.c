@@ -2,7 +2,6 @@
 #include "../../declaraciones/gestionBD/getData.h"
 #include "../../declaraciones/gestionBD/insertData.h"
 #include "../../declaraciones/logicaDePresentacion/visualizar.h"
-#include "../../declaraciones/logicaDeNegocio/reserva.h"
 #include "../../declaraciones/gestionBD/updateData.h"
 #include "../../declaraciones/logicaDeNegocio/torneos.h"
 #include "../../declaraciones/gestionBD/deleteData.h"
@@ -467,13 +466,14 @@ void menuTienda2(Usuario u, ListaArticulos l){
     }
 }
 void GestionReservas (Usuario u){
-    printf("AREA DE RESERVAS DE USUARIO\n");
-    printf("\n");
+    imprimirTitulo();
     int pistasdisponibles=0;
     char *nompist;
     char *fecha;
     char *hora ;
     while(pistasdisponibles==0){
+        printf("AREA DE RESERVAS DE USUARIO\n");
+        printf("\n");
         printf("Escriba el tipo de pista que desea:\n ");
         printf("-indoor\n -outdoor\n");
         nompist=(char*)malloc(8*sizeof(char));
@@ -486,20 +486,29 @@ void GestionReservas (Usuario u){
         printf("\n ");
         fflush(stdin);
 
-
-        printf("Escriba la hora que desea la pista (Recuerda que solo se pueden servar las pista a empunto): hora:minuto \n"); 
-        hora=(char*)malloc(6*sizeof(char));
-        scanf("%s",hora);
-        printf("\n ");
-        fflush(stdin);
-        horareserva(hora);
-
-        pistasdisponibles=getNumPistas(nompist,fecha,hora);
-    
-        
-        if(pistasdisponibles==0){
-            printf("En el dia y hora que has seleccionado no hay pistas %s disponibles \n",nompist);
+        int a=0;
+        while (a==0){
+            printf("Escriba la hora que desea la pista (Recuerda que solo se pueden servar las pista a en punto): hora:minuto \n"); 
+            hora=(char*)malloc(6*sizeof(char));
+            scanf("%s",hora);
+            printf("\n ");
+            fflush(stdin);
+            char* Char = (char *)malloc(sizeof(char));
+            sscanf("0", "%c", Char);
+            
+            if (hora[3]==*Char && hora[4]==*Char){
+                a=a+1;
+            }
+            if (a==0){
+                printf("Hora incorrecta :");    
+            }
         }
+
+    pistasdisponibles=getNumPistas(nompist,fecha,hora);
+    if(pistasdisponibles==0){
+        printf("En el dia y hora que has seleccionado no hay pistas %s disponibles \n",nompist);
+        }
+    imprimirTitulo();
     }
     printf("\n ");
     int* numeros=getreservas(nompist,fecha,hora);
@@ -508,7 +517,7 @@ void GestionReservas (Usuario u){
     int pistanum;
     while (si==0){
        printf("\n");
-       printf("Escriba el numero de pista que dese reservar: \n");
+       printf("Escriba el numero de pista que desee reservar: \n");
         scanf("%d",&pistanum);
         for(int a=0; a<sizeof(numeros);a++){
             if (numeros[a]==pistanum){
@@ -526,6 +535,7 @@ void GestionReservas (Usuario u){
 
     printf("La reserva ha sido procesada con exito. Muchas gracias.\n");
     printf("\n");
+    system("pause");
     menuSocio(u);
     
 }
